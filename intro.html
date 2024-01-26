@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,6 +25,7 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -50,7 +51,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="next">
+<link href="./upgma.html" rel="next">
 <link href="./index.html" rel="prev">
 <link href="./icon_32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -68,7 +69,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -77,6 +84,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -92,12 +100,12 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -107,12 +115,12 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">BM329 Workshop B: Diseases of the Respiratory Tract</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/sipbs-compbiol/BM329_Block_A_workshop" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/sipbs-compbiol/BM329_Block_A_workshop" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -142,8 +150,14 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./upgma.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">UPGMA</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -155,7 +169,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -171,7 +185,7 @@ div.csl-indent {
   </ul></li>
   <li><a href="#evolution-and-clustering" id="toc-evolution-and-clustering" class="nav-link" data-scroll-target="#evolution-and-clustering"><span class="header-section-number">1.3</span> Evolution and Clustering</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sipbs-compbiol/BM329_Block_A_workshop/edit/main/intro.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sipbs-compbiol/BM329_Block_A_workshop/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/sipbs-compbiol/BM329_Block_A_workshop/edit/main/intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/sipbs-compbiol/BM329_Block_A_workshop/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -191,31 +205,41 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <p>This workshop introduces and reinforces concepts related to transmission and evolution of respiratory viruses.</p>
 <section id="dendrograms-tree-diagrams-and-evolution" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="dendrograms-tree-diagrams-and-evolution"><span class="header-section-number">1.1</span> Dendrograms (Tree Diagrams) and Evolution</h2>
-<p>In this workshop, you will produce <a href="https://en.wikipedia.org/wiki/Dendrogram"><em>dendrograms</em></a>: these are <em>tree diagrams</em> that can represent the process of evolution. You have already seen tree diagrams, like those in <a href="#fig-tol-rect">Figure&nbsp;<span>1.1</span></a>, used on this course to represent the process of evolution.</p>
-<div id="fig-tol-rect" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="assets/images/41564_2016_Article_BFnmicrobiol201648_Fig2_HTML.png" class="img-fluid figure-img" style="width:80.0%" alt="Rectangular phylogram of the Tree of Life. Archaea (in red) and Bacteria (in blue) form the two main domains, and Eukaryotes (in green) are a subgroup within Archaea."></p>
-<figcaption class="figure-caption">Figure&nbsp;1.1: Tree of Life obtained using ribosomal genes, showing the major Domains of life (<span class="citation" data-cites="Hug2016-sv">Hug et al. (<a href="references.html#ref-Hug2016-sv" role="doc-biblioref">2016</a>)</span>).</figcaption>
+<p>In this workshop, you will produce <a href="https://en.wikipedia.org/wiki/Dendrogram"><em>dendrograms</em></a>: these are <em>tree diagrams</em> that can represent the process of evolution. You have already seen tree diagrams, like those in <a href="#fig-tol-rect" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>, used on this course to represent the process of evolution.</p>
+<div id="fig-tol-rect" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Rectangular phylogram of the Tree of Life. Archaea (in red) and Bacteria (in blue) form the two main domains, and Eukaryotes (in green) are a subgroup within Archaea.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tol-rect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/41564_2016_Article_BFnmicrobiol201648_Fig2_HTML.png" class="img-fluid figure-img" style="width:80.0%" alt="Rectangular phylogram of the Tree of Life. Archaea (in red) and Bacteria (in blue) form the two main domains, and Eukaryotes (in green) are a subgroup within Archaea.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tol-rect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: Tree of Life obtained using ribosomal genes, showing the major Domains of life (<span class="citation" data-cites="Hug2016-sv">Hug et al. (<a href="references.html#ref-Hug2016-sv" role="doc-biblioref">2016</a>)</span>).
+</figcaption>
 </figure>
 </div>
-<p>Typically, in evolutionary analyses, you will see that these trees are organised to show a progression through time. The <em>leaves</em> of the tree usually represent things that exist “now” or, at least, most recently (these are at the right hand side of <a href="#fig-tol-rect">Figure&nbsp;<span>1.1</span></a>).</p>
-<p>The dendrogram traces lines - <em>branches</em> - from the leaves, and these gradually meet up together, just as branches of a real tree do, as you progress from right to left in <a href="#fig-tol-rect">Figure&nbsp;<span>1.1</span></a>. Eventually, they all meet up together at the oldest (left-most, in <a href="#fig-tol-rect">Figure&nbsp;<span>1.1</span></a>) part of the tree, (called the <em>root</em>).</p>
-<p>Trees like this can be used to represent large-scale evolution, like the complete Tree of Life in <a href="#fig-tol-rect">Figure&nbsp;<span>1.1</span></a>, or evolution on a small scale. For example, <a href="#fig-pseud-hosp">Figure&nbsp;<span>1.2</span></a> represents evolution of the pathogenic bacterium <em>Pseudomonas aeruginosa</em> in a UK hospital. This tree was used to trace the source of infection in a burns unit, ultimately locating the precise valve in the plumbing from which the infectious agent was finding its way into patients (<span class="citation" data-cites="Quick2014-xp">Quick et al. (<a href="references.html#ref-Quick2014-xp" role="doc-biblioref">2014</a>)</span>).</p>
-<div id="fig-pseud-hosp" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="assets/images/bmjopen-2014-November-4-11--F3.large.jpg" class="img-fluid figure-img" style="width:80.0%" alt="Phylogenetic tree of Pseudomonas aeruginosa isolates, showing a close relationship between those obtained from wound swabs, and those from the shower next to the bed (@Quick2014-xp)."></p>
-<figcaption class="figure-caption">Figure&nbsp;1.2: High-resolution genome-based phylogenetic tree of <em>Pseudomonas aeruginosa</em> samples collected during an observational hospital study to track infection. Samples were collected from wounds (red), water (blue), or the environment (green). All wound samples are closely-related to water samples from the shower next to bed 11.</figcaption>
+<p>Typically, in evolutionary analyses, you will see that these trees are organised to show a progression through time. The <em>leaves</em> of the tree usually represent things that exist “now” or, at least, most recently (these are at the right hand side of <a href="#fig-tol-rect" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>).</p>
+<p>The dendrogram traces lines - <em>branches</em> - from the leaves, and these gradually meet up together, just as branches of a real tree do, as you progress from right to left in <a href="#fig-tol-rect" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>. Eventually, they all meet up together at the oldest (left-most, in <a href="#fig-tol-rect" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>) part of the tree, (called the <em>root</em>).</p>
+<p>Trees like this can be used to represent large-scale evolution, like the complete Tree of Life in <a href="#fig-tol-rect" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>, or evolution on a small scale. For example, <a href="#fig-pseud-hosp" class="quarto-xref">Figure&nbsp;<span>1.2</span></a> represents evolution of the pathogenic bacterium <em>Pseudomonas aeruginosa</em> in a UK hospital. This tree was used to trace the source of infection in a burns unit, ultimately locating the precise valve in the plumbing from which the infectious agent was finding its way into patients (<span class="citation" data-cites="Quick2014-xp">Quick et al. (<a href="references.html#ref-Quick2014-xp" role="doc-biblioref">2014</a>)</span>).</p>
+<div id="fig-pseud-hosp" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Phylogenetic tree of Pseudomonas aeruginosa isolates, showing a close relationship between those obtained from wound swabs, and those from the shower next to the bed (@Quick2014-xp).">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pseud-hosp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/bmjopen-2014-November-4-11--F3.large.jpg" class="img-fluid figure-img" style="width:80.0%" alt="Phylogenetic tree of Pseudomonas aeruginosa isolates, showing a close relationship between those obtained from wound swabs, and those from the shower next to the bed (@Quick2014-xp).">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pseud-hosp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.2: High-resolution genome-based phylogenetic tree of <em>Pseudomonas aeruginosa</em> samples collected during an observational hospital study to track infection. Samples were collected from wounds (red), water (blue), or the environment (green). All wound samples are closely-related to water samples from the shower next to bed 11.
+</figcaption>
 </figure>
 </div>
 </section>
 <section id="interpreting-a-tree" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="interpreting-a-tree"><span class="header-section-number">1.2</span> Interpreting a tree</h2>
-<p>The trees in <a href="#fig-tol-rect">Figure&nbsp;<span>1.1</span></a> and <a href="#fig-pseud-hosp">Figure&nbsp;<span>1.2</span></a> both imply a branching evolutionary process. A single common ancestor to every organism represented at one of the leaves existed at some point in history, and that date in history is on the very leftmost point of the tree. The rest of the tree is a representation of how evolution progressed from that single ancestor to the variety of organisms represented at the <em>leaf nodes</em>.</p>
+<p>The trees in <a href="#fig-tol-rect" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> and <a href="#fig-pseud-hosp" class="quarto-xref">Figure&nbsp;<span>1.2</span></a> both imply a branching evolutionary process. A single common ancestor to every organism represented at one of the leaves existed at some point in history, and that date in history is on the very leftmost point of the tree. The rest of the tree is a representation of how evolution progressed from that single ancestor to the variety of organisms represented at the <em>leaf nodes</em>.</p>
 <section id="branch-lengths" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="branch-lengths"><span class="header-section-number">1.2.1</span> Branch lengths</h3>
 <p>As you move from left-to-right in those trees, there is a short horizontal line (the <em>root</em>) that represents time passing for that ancestor. But then the branch splits into two (it <em>diverges</em>), representing some kind of event that produces distinct “offspring.” Each of these proceeds through time as a horizontal line for a distance before itself <em>diverging</em> to result in two new, differentiable offspring, and so on and so on until the <em>leaf nodes</em> are reached.</p>
@@ -246,33 +270,45 @@ The length of a branch doesn’t necessarily correspond exactly to time
 <li><strong><em>cladograms</em></strong>: all branch lengths are the same - they do not represent change on an evolutionary timescale, only the order of divergences in the tree</li>
 </ul>
 <div id="fig-clad-phyl" class="quarto-layout-panel">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-phylo" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="assets/images/example_tree_phylo.png" class="img-fluid figure-img" data-ref-parent="fig-clad-phyl"></p>
-<figcaption class="figure-caption">(a) Phylogram.</figcaption>
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-clad-phyl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-clad-phyl" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-phylo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-phylo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/example_tree_phylo.png" class="img-fluid figure-img" style="width:20.0%" data-ref-parent="fig-clad-phyl">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-phylo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Phylogram.
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-clado" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="assets/images/example_tree_clado.png" class="img-fluid figure-img" data-ref-parent="fig-clad-phyl"></p>
-<figcaption class="figure-caption">(b) Cladogram</figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-clad-phyl" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-clado" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-clado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/example_tree_clado.png" class="img-fluid figure-img" style="width:20.0%" data-ref-parent="fig-clad-phyl">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-clado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Cladogram
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1.3: In a phylogram the branch lengths may be uneven. They represent evolutionary time between <em>nodes</em> (divergences and/or leaves on the tree), and the time between those may vary. In a cladogram the branch lengths are identical and the tree only represents <em>topology</em> - the order in which branches diverge.</figcaption><p></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clad-phyl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.3: In a phylogram the branch lengths may be uneven. They represent evolutionary time between <em>nodes</em> (divergences and/or leaves on the tree), and the time between those may vary. In a cladogram the branch lengths are identical and the tree only represents <em>topology</em> - the order in which branches diverge.
+</figcaption>
 </figure>
 </div>
 </section>
 <section id="topology" class="level3" data-number="1.2.3">
 <h3 data-number="1.2.3" class="anchored" data-anchor-id="topology"><span class="header-section-number">1.2.3</span> Topology</h3>
 <p><em>Topology</em> is the order of branching in a tree: the order of <em>divergence events</em> from the common ancestor of all leaf nodes to the present. Two trees with the same order of branching, but different branch lengths, have the same <em>topology</em>, and imply the same sequence of divergences.</p>
-<p>For example, in <a href="#fig-clad-phyl">Figure&nbsp;<span>1.3</span></a> the first divergence separates <code>Mouse</code> from all the other mammals, and then the next divergence separates <code>Bovine</code> from the primates. Whether you examine the phylogram or the cladogram, the order of branching - the <em>topology</em> - of the tree is the same. They represent the same evolutionary sequence of events.</p>
+<p>For example, in <a href="#fig-clad-phyl" class="quarto-xref">Figure&nbsp;<span>1.3</span></a> the first divergence separates <code>Mouse</code> from all the other mammals, and then the next divergence separates <code>Bovine</code> from the primates. Whether you examine the phylogram or the cladogram, the order of branching - the <em>topology</em> - of the tree is the same. They represent the same evolutionary sequence of events.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -286,28 +322,40 @@ Note
 <p>Even if two trees share the same topology, and the same <em>sequence</em> of events, if any branch lengths differ the trees might still represent different <em>evolutionary histories</em> as the times between those events may differ.</p>
 </div>
 </div>
-<p>Two trees can look superficially different, but actually represent the same sequence of branching events, and even the same evolutionary history, as is the case in <a href="#fig-phylo-rot">Figure&nbsp;<span>1.4</span></a>. Here, the tree has been rotated</p>
+<p>Two trees can look superficially different, but actually represent the same sequence of branching events, and even the same evolutionary history, as is the case in <a href="#fig-phylo-rot" class="quarto-xref">Figure&nbsp;<span>1.4</span></a>. Here, the tree has been rotated</p>
 <div id="fig-phylo-rot" class="quarto-layout-panel">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-phylo-rot1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="assets/images/example_tree_phylo_rot_1.png" class="img-fluid figure-img" data-ref-parent="fig-phylo-rot"></p>
-<figcaption class="figure-caption">(a) Original tree</figcaption>
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-phylo-rot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-phylo-rot" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-phylo-rot1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-phylo-rot1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/example_tree_phylo_rot_1.png" class="img-fluid figure-img" style="width:20.0%" data-ref-parent="fig-phylo-rot">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-phylo-rot1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Original tree
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-phylo-rot2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="assets/images/example_tree_phylo_rot_2.png" class="img-fluid figure-img" data-ref-parent="fig-phylo-rot"></p>
-<figcaption class="figure-caption">(b) Tree with rotation</figcaption>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-phylo-rot" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-phylo-rot2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-phylo-rot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/example_tree_phylo_rot_2.png" class="img-fluid figure-img" style="width:20.0%" data-ref-parent="fig-phylo-rot">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-phylo-rot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Tree with rotation
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1.4: In any tree, branches can be rotated around an <em>internal node</em> without changing the structure or interpretation of the tree. Here, the two leaf nodes highlighted in purple (<a href="#fig-phylo-rot1">Figure&nbsp;<span>1.4 (a)</span></a>) are rotated around their common ancestor to give the tree in (<a href="#fig-phylo-rot2">Figure&nbsp;<span>1.4 (b)</span></a>). The rotated conformation is highlighted in green. Even though the two trees <em>look</em> different, the evolutionary relationships they represent are identical.</figcaption><p></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-phylo-rot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.4: In any tree, branches can be rotated around an <em>internal node</em> without changing the structure or interpretation of the tree. Here, the two leaf nodes highlighted in purple (<a href="#fig-phylo-rot1" class="quarto-xref">Figure&nbsp;<span>1.4 (a)</span></a>) are rotated around their common ancestor to give the tree in (<a href="#fig-phylo-rot2" class="quarto-xref">Figure&nbsp;<span>1.4 (b)</span></a>). The rotated conformation is highlighted in green. Even though the two trees <em>look</em> different, the evolutionary relationships they represent are identical.
+</figcaption>
 </figure>
 </div>
 <div class="callout callout-style-default callout-important callout-titled" title="Question">
@@ -320,14 +368,14 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Is the tree represented in <a href="#fig-phylo-rot">Figure&nbsp;<span>1.4</span></a> the same tree shown in <a href="#fig-phylo">Figure&nbsp;<span>1.3 (a)</span></a>?</p>
+<p>Is the tree represented in <a href="#fig-phylo-rot" class="quarto-xref">Figure&nbsp;<span>1.4</span></a> the same tree shown in <a href="#fig-phylo" class="quarto-xref">Figure&nbsp;<span>1.3 (a)</span></a>?</p>
 </div>
 </div>
 </section>
 </section>
 <section id="evolution-and-clustering" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="evolution-and-clustering"><span class="header-section-number">1.3</span> Evolution and Clustering</h2>
-<p>The examples in <a href="#fig-tol-rect">Figure&nbsp;<span>1.1</span></a>, <a href="#fig-pseud-hosp">Figure&nbsp;<span>1.2</span></a>, and <a href="#fig-phylo-rot">Figure&nbsp;<span>1.4</span></a> are representations of evolution. In all cases, two organisms that share a more recent common ancestor (like <code>Chimp</code> and <code>Human</code> in <a href="#fig-phylo-rot">Figure&nbsp;<span>1.4</span></a>) combine together at a closer <em>node</em> than do two more distantly-related organisms (like <code>Chimp</code> and <code>Gibbon</code>).</p>
+<p>The examples in <a href="#fig-tol-rect" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>, <a href="#fig-pseud-hosp" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>, and <a href="#fig-phylo-rot" class="quarto-xref">Figure&nbsp;<span>1.4</span></a> are representations of evolution. In all cases, two organisms that share a more recent common ancestor (like <code>Chimp</code> and <code>Human</code> in <a href="#fig-phylo-rot" class="quarto-xref">Figure&nbsp;<span>1.4</span></a>) combine together at a closer <em>node</em> than do two more distantly-related organisms (like <code>Chimp</code> and <code>Gibbon</code>).</p>
 <p>It is natural to think of this representation as the divergence of species, as <code>Gibbon</code> diverging from ancestral primates at an earlier stage than <code>Gorilla</code> diverging from the ancestor of <code>Chimp</code> and <code>Human</code>. But it is <em>also a representation of <strong>clustering</strong></em>. What this means is that we <em>cluster</em> <code>Chimp</code> more closely with <code>Human</code> than with <code>Bovine</code> because <code>Chimp</code> and <code>Human</code> share more similarities with each other than either do with <code>Bovine</code>.</p>
 <p>In practice this means we can use mathematical approaches that cluster similar things together into trees to approximate evolutionary history, so long as what we use to measure <em>similarity</em> is relevant to evolution. Methods that perform this kind of clustering to produce a tree are called <strong><em>hierarchical clustering methods</em></strong> and you will use one of these to infer an evolutionary history for the `flu viruses you are evolving in the workshop.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -357,12 +405,12 @@ Let’s build a tree
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Let’s get started with building a UPGMA tree by clicking on the link <a href="upgma.qmd"><code>UPGMA</code></a> (here, in the menu, or below)</p>
+<p>Let’s get started with building a UPGMA tree by clicking on the link <a href="./upgma.html"><code>UPGMA</code></a> (here, in the menu, or below)</p>
 </div>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Hug2016-sv" class="csl-entry" role="listitem">
 Hug, Laura A, Brett J Baker, Karthik Anantharaman, Christopher T Brown, Alexander J Probst, Cindy J Castelle, Cristina N Butterfield, et al. 2016. <span>“A New View of the Tree of Life.”</span> <em>Nat. Microbiol.</em> 1 (5).
 </div>
@@ -452,10 +500,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -465,8 +512,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -479,6 +535,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -522,6 +697,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -547,6 +723,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -608,26 +810,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link">
+      <a href="./index.html" class="pagination-link  aria-label=" preface="" to="" the="" {{&lt;="" var="" ay="" &gt;}}="" bm329="" block="" b="" workshop"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface to the 2023-24 BM329 Block B workshop</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./summary.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./upgma.html" class="pagination-link" aria-label="<span class='chapter-number'>2</span>&nbsp; <span class='chapter-title'>UPGMA</span>">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">UPGMA</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">These BM329 workshops were written by Dr Leighton Pritchard, Dr Morgan Feeney, and Prof.&nbsp;Paul Hoskisson.</div>   
+    <div class="nav-footer-left">
+<p>These BM329 workshops were written by Dr Leighton Pritchard, Dr Morgan Feeney, and Prof.&nbsp;Paul Hoskisson.</p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
-    </div>
-    <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a>.</div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/sipbs-compbiol/BM329_Block_A_workshop/edit/main/intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/sipbs-compbiol/BM329_Block_A_workshop/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
   </div>
 </footer>
+
 
 
 
