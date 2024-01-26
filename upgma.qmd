@@ -1,0 +1,18 @@
+# UPGMA
+
+UPGMA stands for **U**nweighted **P**air **G**roup **M**ethod with **A**rithmetic mean. It is a simple _hierarchical clustering method_ that can be used to produce a rooted dendrogram. This dendrogram represents the structure (_clustering_) of relationships in a dataset and, _when the dataset represents evolutionary distances_ can be used to produce an evolutionary tree.
+
+## Let's build a tree!
+
+```{r echo=FALSE, warning=FALSE}
+data <- readr::read_tsv("assets/data/chocolate_short.tab",
+                          col_types="ciiiiiiiiiiiiiii")
+rownames(data) <- data$`Chocolate Bar`
+flextable::flextable(data)
+```
+
+
+```{r echo=FALSE, warning=FALSE}
+hc_choc = hclust(dist(data), method="average")
+plot(hc_choc, labels=rownames(data))
+```

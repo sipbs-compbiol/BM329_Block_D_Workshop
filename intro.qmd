@@ -1,0 +1,98 @@
+# Introduction
+
+This workshop introduces and reinforces concepts related to transmission and evolution of respiratory viruses.
+
+## Dendrograms (Tree Diagrams) and Evolution
+
+In this workshop, you will produce [_dendrograms_](https://en.wikipedia.org/wiki/Dendrogram): these are _tree diagrams_ that can represent the process of evolution. You have already seen tree diagrams, like those in @fig-tol-rect, used on this course to represent the process of evolution.
+
+![Tree of Life obtained using ribosomal genes, showing the major Domains of life (@Hug2016-sv).](assets/images/41564_2016_Article_BFnmicrobiol201648_Fig2_HTML.webp){#fig-tol-rect width="80%" fig-alt="Rectangular phylogram of the Tree of Life. Archaea (in red) and Bacteria (in blue) form the two main domains, and Eukaryotes (in green) are a subgroup within Archaea."}
+
+Typically, in evolutionary analyses, you will see that these trees are organised to show a progression through time. The _leaves_ of the tree usually represent things that exist "now" or, at least, most recently (these are at the right hand side of @fig-tol-rect).
+
+The dendrogram traces lines - _branches_ - from the leaves, and these gradually meet up together, just as branches of a real tree do, as you progress from right to left in @fig-tol-rect. Eventually, they all meet up together at the oldest (left-most, in @fig-tol-rect) part of the tree, (called the _root_).
+
+Trees like this can be used to represent large-scale evolution, like the complete Tree of Life in @fig-tol-rect, or evolution on a small scale. For example, @fig-pseud-hosp represents evolution of the pathogenic bacterium _Pseudomonas aeruginosa_ in a UK hospital. This tree was used to trace the source of infection in a burns unit, ultimately locating the precise valve in the plumbing from which the infectious agent was finding its way into patients (@Quick2014-xp).
+
+![High-resolution genome-based phylogenetic tree of _Pseudomonas aeruginosa_ samples collected during an observational hospital study to track infection. Samples were collected from wounds (red), water (blue), or the environment (green). All wound samples are closely-related to water samples from the shower next to bed 11.](assets/images/bmjopen-2014-November-4-11--F3.large.jpg){#fig-pseud-hosp width="80%" fig-alt="Phylogenetic tree of Pseudomonas aeruginosa isolates, showing a close relationship between those obtained from wound swabs, and those from the shower next to the bed (@Quick2014-xp)."}
+
+## Interpreting a tree
+
+The trees in @fig-tol-rect and @fig-pseud-hosp both imply a branching evolutionary process. A single common ancestor to every organism represented at one of the leaves existed at some point in history, and that date in history is on the very leftmost point of the tree. The rest of the tree is a representation of how evolution progressed from that single ancestor to the variety of organisms represented at the _leaf nodes_.
+
+### Branch lengths
+
+As you move from left-to-right in those trees, there is a short horizontal line (the _root_) that represents time passing for that ancestor. But then the branch splits into two (it _diverges_), representing some kind of event that produces distinct "offspring." Each of these proceeds through time as a horizontal line for a distance before itself _diverging_ to result in two new, differentiable offspring, and so on and so on until the _leaf nodes_ are reached.
+
+The lengths of the branches here represent, in some way, the passage of time between consecutive _divergences_ (or a leaf node and the most recent split). The longer the branch, the longer the passage of time.
+
+::: { .callout-warning collapse="true"}
+## The length of a branch doesn't necessarily correspond exactly to time
+
+In practice, when we make these trees, we are usually measuring something other than time, itself. More often we are measuring some kind of difference between the leaf nodes, and _assuming_ that a difference of 200 corresponds to 200 units of time (years, millennia, etc.), and a difference of 1000 corresponds to 1000 units.
+
+Biology is complicated, and this assumption rarely holds exactly. There are methods to try to turn our measurements accurately into units of time, but they are beyond the scope of this course.
+:::
+
+### Cladograms and Phylograms
+
+There is more than one kind of dendrogram. Two types you will meet frequently are:
+
+- **_phylograms_**: each branch length is intended to represent the passage of time (or some other measure of difference) - they represent change on an evolutionary timescale
+- **_cladograms_**: all branch lengths are the same - they do not represent change on an evolutionary timescale, only the order of divergences in the tree
+
+::: {#fig-clad-phyl layout-ncol=2}
+
+![Phylogram.](assets/images/example_tree_phylo.png){#fig-phylo width="20%"}
+
+
+![Cladogram](assets/images/example_tree_clado.png){#fig-clado width="20%"}
+
+In a phylogram the branch lengths may be uneven. They represent evolutionary time between _nodes_ (divergences and/or leaves on the tree), and the time between those may vary. In a cladogram the branch lengths are identical and the tree only represents _topology_ - the order in which branches diverge.
+:::
+
+### Topology
+
+_Topology_ is the order of branching in a tree: the order of _divergence events_ from the common ancestor of all leaf nodes to the present. Two trees with the same order of branching, but different branch lengths, have the same _topology_, and imply the same sequence of divergences. 
+
+For example, in @fig-clad-phyl the first divergence separates `Mouse` from all the other mammals, and then the next divergence separates `Bovine` from the primates. Whether you examine the phylogram or the cladogram, the order of branching - the _topology_ - of the tree is the same. They represent the same evolutionary sequence of events.
+
+::: { .callout-note }
+Even if two trees share the same topology, and the same _sequence_ of events, if any branch lengths differ the trees might still represent different _evolutionary histories_ as the times between those events may differ.
+:::
+
+Two trees can look superficially different, but actually represent the same sequence of branching events, and even the same evolutionary history, as is the case in @fig-phylo-rot. Here, the tree has been rotated 
+
+::: {#fig-phylo-rot layout-ncol=2}
+
+![Original tree](assets/images/example_tree_phylo_rot_1.png){#fig-phylo-rot1 width="20%"}
+
+
+![Tree with rotation](assets/images/example_tree_phylo_rot_2.png){#fig-phylo-rot2 width="20%"}
+
+In any tree, branches can be rotated around an _internal node_ without changing the structure or interpretation of the tree. Here, the two leaf nodes highlighted in purple (@fig-phylo-rot1) are rotated around their common ancestor to give the tree in (@fig-phylo-rot2). The rotated conformation is highlighted in green. Even though the two trees _look_ different, the evolutionary relationships they represent are identical.
+:::
+
+::: { .callout-important title="Question"}
+Is the tree represented in @fig-phylo-rot the same tree shown in @fig-phylo?
+:::
+
+## Evolution and Clustering
+
+The examples in @fig-tol-rect, @fig-pseud-hosp, and @fig-phylo-rot are representations of evolution. In all cases, two organisms that share a more recent common ancestor (like `Chimp` and `Human` in @fig-phylo-rot) combine together at a closer _node_ than do two more distantly-related organisms (like `Chimp` and `Gibbon`).
+
+It is natural to think of this representation as the divergence of species, as `Gibbon` diverging from ancestral primates at an earlier stage than `Gorilla` diverging from the ancestor of `Chimp` and `Human`. But it is _also a representation of **clustering**_. What this means is that we _cluster_ `Chimp` more closely with `Human` than with `Bovine` because `Chimp` and `Human` share more similarities with each other than either do with `Bovine`.
+
+In practice this means we can use mathematical approaches that cluster similar things together into trees to approximate evolutionary history, so long as what we use to measure _similarity_ is relevant to evolution. Methods that perform this kind of clustering to produce a tree are called **_hierarchical clustering methods_** and you will use one of these to infer an evolutionary history for the `flu viruses you are evolving in the workshop.
+
+::: { .callout-note collapse="true"}
+## Two different ways to reconstruct evolution
+
+Hierarchical clustering methods are only one way to build an evolutionary tree. They were the first to be used, because they are not difficult to understand, and are relatively straightforward and quick to calculate. All of these methods use a _matrix_ (table) of differences between organisms and apply an _algorithm_ to construct a tree (or _hierarchy_ - hence "hierarchical"). Methods that use this approach include Neighbour-Joining, and UPGMA.
+
+The development of cheap, powerful computing enabled more advanced and more accurate alternative methods to be used routinely. These methods include Maximum Likelihood (ML) and Bayesian approaches that require significant computing power. These approaches differ from hierarchical clustering because they attempt to _fit_ a _model of evolution_ (like fitting a curve on a graph) to the data obtained from each organism, rather than using an algorithm to build a tree from distances.
+:::
+
+::: { .callout-tip title="Let's build a tree"}
+Let's get started with building a UPGMA tree by clicking on the link [`UPGMA`](upgma.qmd) (here, in the menu, or below)
+:::

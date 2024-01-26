@@ -1,0 +1,44 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "BM329 Workshop B: Diseases of the Respiratory Tract"
+  reader-mode: true
+  
+  cover-image: sipbs_compbio_800.png
+  favicon: icon_32.png
+  
+  page-footer:
+    left: |
+      These BM329 workshops were written by Dr Leighton Pritchard, Dr Morgan Feeney, and Prof. Paul Hoskisson.
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+
+  repo-url: https://github.com/sipbs-compbiol/BM329_Block_A_workshop
+  repo-branch: main
+  repo-actions: [edit, issue]
+
+  author: "Leighton Pritchard"
+  date: "1/26/2024"
+
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    code-link: true
+    
+    author-meta: "Leighton Pritchard"
+  
+  pdf:
+    documentclass: scrreprt
+
+execute:
+  freeze: auto
