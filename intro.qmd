@@ -6,7 +6,7 @@ This workshop introduces and reinforces concepts related to transmission and evo
 
 In this workshop, you will produce [_dendrograms_](https://en.wikipedia.org/wiki/Dendrogram): these are _tree diagrams_ that can represent the process of evolution. You have already seen tree diagrams, like those in @fig-tol-rect, used on this course to represent the process of evolution.
 
-![Tree of Life obtained using ribosomal genes, showing the major Domains of life (@Hug2016-sv).](assets/images/41564_2016_Article_BFnmicrobiol201648_Fig2_HTML.webp){#fig-tol-rect width="80%" fig-alt="Rectangular phylogram of the Tree of Life. Archaea (in red) and Bacteria (in blue) form the two main domains, and Eukaryotes (in green) are a subgroup within Archaea."}
+![Tree of Life obtained using ribosomal genes, showing the major Domains of life (@Hug2016-sv).](assets/images/41564_2016_Article_BFnmicrobiol201648_Fig2_HTML.png){#fig-tol-rect width="80%" fig-alt="Rectangular phylogram of the Tree of Life. Archaea (in red) and Bacteria (in blue) form the two main domains, and Eukaryotes (in green) are a subgroup within Archaea."}
 
 Typically, in evolutionary analyses, you will see that these trees are organised to show a progression through time. The _leaves_ of the tree usually represent things that exist "now" or, at least, most recently (these are at the right hand side of @fig-tol-rect).
 
