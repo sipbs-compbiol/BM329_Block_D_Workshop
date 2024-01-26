@@ -6,6 +6,7 @@
 
 # Quarto files
 /.quarto/
+_book/
 
 # macOS files
 .DS_Store

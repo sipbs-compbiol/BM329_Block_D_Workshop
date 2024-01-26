@@ -25,6 +25,7 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
+    - upgma.qmd
     - summary.qmd
     - references.qmd
 
