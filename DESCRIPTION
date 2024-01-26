@@ -12,9 +12,7 @@ Depends:
 Imports:
     tidyverse (>= 2.0.0),
     ggplot2,
-    flextable,
-    knitr,
-    rmarkdown
+    flextable
 Suggests:
     knitr,
     sessioninfo
