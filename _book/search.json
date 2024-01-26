@@ -1,5 +1,33 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "BM329 Workshop B: Diseases of the Respiratory Tract",
+    "section": "",
+    "text": "Preface to the 2023-24 BM329 Block B workshop\nWelcome to the BM329 (Biomedical Microbiology) Block B workshop for 2023-24.\nThis year is the first presentation of this workshop material, and we would be very grateful to hear feedback by email or through the GitHub repository Issues page."
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "BM329 Workshop B: Diseases of the Respiratory Tract",
+    "section": "Overview",
+    "text": "Overview\nThe workshop asks you to\n\n\n\n\n\n\nImportant Note\n\n\n\nThere is new material in this workshop that is not covered in lectures, and this material is examinable. Please take care to read the text in the expandable callout boxes, as well as that for the workshop, to be sure you have understood the topic and obtain full value from the exercise.\nThe workshop material will remain live online for the duration of BM329, and you can revisit it whenever you wish, for practice or revision.\n\n\nYou should be able to complete this workshop in under two hours."
+  },
+  {
+    "objectID": "index.html#learning-objectives",
+    "href": "index.html#learning-objectives",
+    "title": "BM329 Workshop B: Diseases of the Respiratory Tract",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of this workshop, students will be able to:"
+  },
+  {
+    "objectID": "index.html#assessment",
+    "href": "index.html#assessment",
+    "title": "BM329 Workshop B: Diseases of the Respiratory Tract",
+    "section": "Assessment",
+    "text": "Assessment\nThis workshop activity itself is not formally assessed although, as noted, the material it contains is examinable."
+  },
+  {
     "objectID": "intro.html#dendrograms-tree-diagrams-and-evolution",
     "href": "intro.html#dendrograms-tree-diagrams-and-evolution",
     "title": "1  Introduction",
@@ -19,5 +47,19 @@
     "title": "1  Introduction",
     "section": "1.3 Evolution and Clustering",
     "text": "1.3 Evolution and Clustering\nThe examples in Figure 1.1, Figure 1.2, and Figure 1.4 are representations of evolution. In all cases, two organisms that share a more recent common ancestor (like Chimp and Human in Figure 1.4) combine together at a closer node than do two more distantly-related organisms (like Chimp and Gibbon).\nIt is natural to think of this representation as the divergence of species, as Gibbon diverging from ancestral primates at an earlier stage than Gorilla diverging from the ancestor of Chimp and Human. But it is also a representation of clustering. What this means is that we cluster Chimp more closely with Human than with Bovine because Chimp and Human share more similarities with each other than either do with Bovine.\nIn practice this means we can use mathematical approaches that cluster similar things together into trees to approximate evolutionary history, so long as what we use to measure similarity is relevant to evolution. Methods that perform this kind of clustering to produce a tree are called hierarchical clustering methods and you will use one of these to infer an evolutionary history for the `flu viruses you are evolving in the workshop.\n\n\n\n\n\n\nTwo different ways to reconstruct evolution\n\n\n\n\n\nHierarchical clustering methods are only one way to build an evolutionary tree. They were the first to be used, because they are not difficult to understand, and are relatively straightforward and quick to calculate. All of these methods use a matrix (table) of differences between organisms and apply an algorithm to construct a tree (or hierarchy - hence “hierarchical”). Methods that use this approach include Neighbour-Joining, and UPGMA.\nThe development of cheap, powerful computing enabled more advanced and more accurate alternative methods to be used routinely. These methods include Maximum Likelihood (ML) and Bayesian approaches that require significant computing power. These approaches differ from hierarchical clustering because they attempt to fit a model of evolution (like fitting a curve on a graph) to the data obtained from each organism, rather than using an algorithm to build a tree from distances.\n\n\n\n\n\n\n\n\n\nLet’s build a tree\n\n\n\nLet’s get started with building a UPGMA tree by clicking on the link UPGMA (here, in the menu, or below)\n\n\n\n\n\n\nHug, Laura A, Brett J Baker, Karthik Anantharaman, Christopher T Brown, Alexander J Probst, Cindy J Castelle, Cristina N Butterfield, et al. 2016. “A New View of the Tree of Life.” Nat. Microbiol. 1 (5).\n\n\nQuick, Joshua, Nicola Cumley, Christopher M Wearn, Marc Niebel, Chrystala Constantinidou, Chris M Thomas, Mark J Pallen, et al. 2014. “Seeking the Source of Pseudomonas Aeruginosa Infections in a Recently Opened Hospital: An Observational Study Using Whole-Genome Sequencing.” BMJ Open 4 (11): e006278."
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "2  Summary",
+    "section": "",
+    "text": "In this workshop, you have:\n\n\n\n\n\n\n\n\n\nThank you\n\n\n\nThat’s almost the end of the workshop. Thank you for participating. We hope you found it enjoyable and interesting, and that you now understand more about how bacterial classification works, in practice.\nThis year is the first presentation of this particular material, and we would be very grateful to hear feedback by email or through the GitHub repository Issues page.\n\n\n\n\n\n\n\n\nCompleting the workshop"
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Hug, Laura A, Brett J Baker, Karthik Anantharaman, Christopher T Brown,\nAlexander J Probst, Cindy J Castelle, Cristina N Butterfield, et al.\n2016. “A New View of the Tree of Life.” Nat.\nMicrobiol. 1 (5).\n\n\nQuick, Joshua, Nicola Cumley, Christopher M Wearn, Marc Niebel,\nChrystala Constantinidou, Chris M Thomas, Mark J Pallen, et al. 2014.\n“Seeking the Source of Pseudomonas Aeruginosa Infections in a\nRecently Opened Hospital: An Observational Study Using Whole-Genome\nSequencing.” BMJ Open 4 (11): e006278."
   }
 ]
