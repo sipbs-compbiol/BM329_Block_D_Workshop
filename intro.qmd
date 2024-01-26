@@ -41,12 +41,12 @@ There is more than one kind of dendrogram. Two types you will meet frequently ar
 - **_phylograms_**: each branch length is intended to represent the passage of time (or some other measure of difference) - they represent change on an evolutionary timescale
 - **_cladograms_**: all branch lengths are the same - they do not represent change on an evolutionary timescale, only the order of divergences in the tree
 
-::: {#fig-clad-phyl layout-ncol=2}
+::: {#fig-clad-phyl layout-ncol=2 width="80%"}
 
-![Phylogram.](assets/images/example_tree_phylo.png){#fig-phylo width="20%"}
+![Phylogram.](assets/images/example_tree_phylo.png){#fig-phylo}
 
 
-![Cladogram](assets/images/example_tree_clado.png){#fig-clado width="20%"}
+![Cladogram](assets/images/example_tree_clado.png){#fig-clado}
 
 In a phylogram the branch lengths may be uneven. They represent evolutionary time between _nodes_ (divergences and/or leaves on the tree), and the time between those may vary. In a cladogram the branch lengths are identical and the tree only represents _topology_ - the order in which branches diverge.
 :::
@@ -63,12 +63,12 @@ Even if two trees share the same topology, and the same _sequence_ of events, if
 
 Two trees can look superficially different, but actually represent the same sequence of branching events, and even the same evolutionary history, as is the case in @fig-phylo-rot. Here, the tree has been rotated 
 
-::: {#fig-phylo-rot layout-ncol=2}
+::: {#fig-phylo-rot layout-ncol=2 width="80%"}
 
-![Original tree](assets/images/example_tree_phylo_rot_1.png){#fig-phylo-rot1 width="20%"}
+![Original tree](assets/images/example_tree_phylo_rot_1.png){#fig-phylo-rot1}
 
 
-![Tree with rotation](assets/images/example_tree_phylo_rot_2.png){#fig-phylo-rot2 width="20%"}
+![Tree with rotation](assets/images/example_tree_phylo_rot_2.png){#fig-phylo-rot2}
 
 In any tree, branches can be rotated around an _internal node_ without changing the structure or interpretation of the tree. Here, the two leaf nodes highlighted in purple (@fig-phylo-rot1) are rotated around their common ancestor to give the tree in (@fig-phylo-rot2). The rotated conformation is highlighted in green. Even though the two trees _look_ different, the evolutionary relationships they represent are identical.
 :::
