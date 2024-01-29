@@ -61,7 +61,7 @@ For example, in @fig-clad-phyl the first divergence separates `Mouse` from all t
 Even if two trees share the same topology, and the same _sequence_ of events, if any branch lengths differ the trees might still represent different _evolutionary histories_ as the times between those events may differ.
 :::
 
-Two trees can look superficially different, but actually represent the same sequence of branching events, and even the same evolutionary history, as is the case in @fig-phylo-rot. Here, the tree has been rotated 
+Two trees can look superficially different, but actually represent the same sequence of branching events, and even the same evolutionary history, as is the case in @fig-phylo-rot. Here, the tree has been rotated around the node that joins `Human` to `Chimp`. Although `Human` is above `Chimp` in one tree and below it in the other, both trees have identical topology.
 
 ::: {#fig-phylo-rot layout-ncol=2 width="80%"}
 
@@ -74,7 +74,7 @@ In any tree, branches can be rotated around an _internal node_ without changing 
 :::
 
 ::: { .callout-important title="Question"}
-Is the tree represented in @fig-phylo-rot the same tree shown in @fig-phylo?
+Is the tree represented in @fig-phylo-rot equivalent to the tree shown in @fig-phylo?
 :::
 
 ## Evolution and Clustering
@@ -88,9 +88,11 @@ In practice this means we can use mathematical approaches that cluster similar t
 ::: { .callout-note collapse="true"}
 ## Two different ways to reconstruct evolution
 
-Hierarchical clustering methods are only one way to build an evolutionary tree. They were the first to be used, because they are not difficult to understand, and are relatively straightforward and quick to calculate. All of these methods use a _matrix_ (table) of differences between organisms and apply an _algorithm_ to construct a tree (or _hierarchy_ - hence "hierarchical"). Methods that use this approach include Neighbour-Joining, and UPGMA.
+Hierarchical clustering methods are only one way to build an evolutionary tree. They were the first to be used, because they are not difficult to understand, and are relatively straightforward and quick to calculate. All of these methods apply an _algorithm_ to construct a tree (or _hierarchy_ - hence "hierarchical") from a use a _matrix_ (table) of distances between organisms. Methods that use this approach include Neighbour-Joining, and UPGMA. For these methods to produce an evolutionary tree, the distance we measure between organisms should reflect their evolutionary separation.
 
-The development of cheap, powerful computing enabled more advanced and more accurate alternative methods to be used routinely. These methods include Maximum Likelihood (ML) and Bayesian approaches that require significant computing power. These approaches differ from hierarchical clustering because they attempt to _fit_ a _model of evolution_ (like fitting a curve on a graph) to the data obtained from each organism, rather than using an algorithm to build a tree from distances.
+The development of cheap, powerful computing enabled more advanced and more accurate mathematical methods of evolutionary reconstruction to be used routinely. Such methods include Maximum Likelihood (ML) and Bayesian approaches. These methods require significant computing power and differ from hierarchical clustering because they attempt to _fit_ a _model of evolution_ (like fitting a curve on a graph) to the data obtained from each organism, rather than using an algorithm to build a tree from distances.
+
+In modern biology, a standard laptop can very quickly produce trees using Maximum Likelihood methods that fit an explicit and well-justified model of evolution. As a result algorithmic methods, such as Neighbour-Joining and UPGMA, which are prone to systematic errors and inaccuracies, and whose only real advantage was speed, are no longer considered good practice for evolutionary reconstruction.
 :::
 
 ::: { .callout-tip title="Let's build a tree"}
