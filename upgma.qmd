@@ -75,8 +75,9 @@ mat %>%
 The two stages of drawing the example tree: (a) the first join between $A$ and $B$; (b) the addition of $C$.
 :::
 
-
 5. The final tree can be represented as $((A, B), C)$: $A$ and $B$ lie within the inner parentheses, reflecting that they are more similar to each other than either is to $C$.
+
+**For larger datasets, we keep repeating the process until we run out of rows and columns to combine**
 :::
 
 
@@ -93,17 +94,15 @@ UPGMA is a clustering algorithm that _can_ be used for evolutionary analysis if 
 When that's not the case, it's just clustering.
 :::
 
-::: {#fig-sweeties layout-ncol=3 width="80%"}
+::: {#fig-sweeties layout-ncol=5 width="80%"}
 
 ![Sticks to your fillings](assets/images/Crunchie.jpg){#fig-crunchie fig-alt="A Crunchie bar wrapper"}
-
-![I'm the only one in the family who likes these](assets/images/bounty.jpg){#fig-bounty fig-alt="A Bounty wrapper"}
-
-![Better than American chocolate](assets/images/dairy_milk.png){#fig-dairy-milk fig-alt="A Dairy Milk wrapper"}
 
 ![Filled with compressed dust](assets/images/maltesers.jpg){#fig-maltesers fig-alt="A Malteser bag"}
 
 ![Helps you work, rest, and destabilise your insulin resistance](assets/images/mars.jpg){#fig-mars fig-alt="A Mars Bar wrapper"}
+
+![Will they have the answer?](assets/images/smarties.jpg){#fig-teacake fig-alt="A packet of Smarties"}
 
 ![Salute the _El Presidente_ of confectionery](assets/images/teacake.png){#fig-teacake fig-alt="A wrapped Tunnock's teacake"}
 
@@ -113,15 +112,162 @@ Six varieties of chocolate for which we will make an evolutionary tree, on the b
 
 ### Making a distance matrix
 
-```{r echo=FALSE, warning=FALSE}
+It's not very obvious how to measure the distances between different kinds of chocolate (other than to get a ruler out and see how far apart they are). This is true in the same way that it's not obvious how to measure a distance between a cat and a dog, or a human and a whale, or a bacterium and a fungus.
+
+One approach to defining distances, developed as part of an approach to reconstructing evolution called _cladistics_, is to define _characters_ that the chocolate types either possess or do not possess. For example, a Mars Bar contains caramel, but a Bounty does not. A Dairy Milk bar is flat, but Smarties are not.
+
+By defining a set of _characters_, we can make a table of properties that might be shared, or not, between all our chocolate bars: @tbl-characters.
+
+```{r}
+#| label: tbl-characters
+#| tbl-cap: "Characters assigned to varieties of chocolate: `1` indicates character presence, `0` indicates its absence."
+#| echo: false
+#| warning: false
+
 data <- readr::read_tsv("assets/data/chocolate_short.tab",
                           col_types="ciiiiiiiiiiiiiii")
 rownames(data) <- data$`Chocolate Bar`
-flextable::flextable(data)
+
+data %>%
+  kableExtra::kable(table.attr = "quarto-disable-processing=true") %>%
+  kableExtra::kable_classic_2(full_width=FALSE)
 ```
 
+But these aren't themselves distances, so how can we get a distance from this kind of data?
 
-```{r echo=FALSE, warning=FALSE}
-hc_choc = hclust(dist(data), method="average")
-plot(hc_choc, labels=rownames(data))
+::: { .callout-caution title="Hamming Distance" }
+One way we can calculate distances between rows of character tables like @tbl-characters is by using the Hamming distance. Here's an example.
+
+Suppose you have a table with two rows that look like @tbl-hamming-chrs
+
+```{r}
+#| label: tbl-hamming-chrs
+#| tbl-cap: "A pair of objects with characters that are either present (`1`) or absent (`0`)."
+#| echo: false
+#| warning: false
+
+dfm <- data.frame(group = c("fungi", "oomycete"),
+                  hyphae = c(1, 1),
+                  chitin = c(1, 0),
+                  cellulose = c(0, 1),
+                  spores = c(1, 1),
+                  legs = c(0, 0))
+dfm %>%
+  kableExtra::kable(table.attr = "quarto-disable-processing=true") %>%
+  kableExtra::kable_classic_2(full_width=FALSE)
 ```
+
+We can look along the rows and count up the number of columns that differ. `hyphae`, `spores`, and `legs` character values are the same for both fungi and oomycetes. But they differ in `chitin` and `cellulose` - two characters. So the Hamming Distance between fungi and oomycetes here is $H = 2$.
+
+We can calculate similar Hamming distances for each pair of chocolotes in @tbl-characters, to produce the distance matrix in @tbl-hamming-dist
+:::
+
+```{r}
+#| label: tbl-hamming-dist
+#| tbl-cap: "Hamming distance matrix generated from the chocolate characters."
+#| echo: false
+#| warning: false
+
+distmat <- readr::read_tsv("assets/data/chocolate_short_dist.tab",
+                          col_types="ciiiiiiiiiiiiiii")
+
+as.matrix(distmat) %>%
+  kableExtra::kable(table.attr = "quarto-disable-processing=true") %>%
+  kableExtra::kable_classic_2(full_width=FALSE)
+```
+
+### Applying UPGMA
+
+1. As with the example in the drop-down box above, we start by identifying the most similar chocolates. Here, that is Maltesers and Smarties, with a distance of $H=2$. We combine these into the group (Smarties, Maltesers), and note they have a branch length to their common ancestor of $\frac{2}{2} = 1$.
+
+2. Now we update the distance matrix. We need to calculate the _arithmetic mean_ of the distances from Smarties and Maltesers to each other variety of chocolate. These distances are given in @tbl-dist-calc-1:
+
+| Chocolate | H(Smarties) | H(Maltesers) | H((Smarties, Maltesers)) |
+|-----------|:-----------:|:------------:|:------------------------:|
+| Mars      | 6           |   6          |  $\frac{6 + 6}{2} = 6$   |
+| Crunchie  | 5           |   3          |  $\frac{5 + 3}{2} = 4$   |
+| Tunnocks  | 5           |   5          |  $\frac{5 + 5}{2} = 5$   |
+
+: Calculating Hamming distance from (Smarties, Maltesers) to the other chocolates. {#tbl-dist-calc-1}
+
+3. Next we take out the individual Smarties and Maltesers rows and columns from the distance matrix, and replace them with a new row and column that reflects the combined (Smarties, Maltesers) ancestor distances from @tbl-dist-calc-1:
+
+```{r}
+#| label: tbl-hamming-dist-2
+#| tbl-cap: "Hamming distance matrix generated from the chocolate characters."
+#| echo: false
+#| warning: false
+
+distmat <- as.matrix(readr::read_tsv("assets/data/chocolate_short_dist_2.txt",
+                          col_types="ciiii"))
+
+as.matrix(distmat) %>%
+  kableExtra::kable(table.attr = "quarto-disable-processing=true") %>%
+  kableExtra::kable_classic_2(full_width=FALSE)
+```
+
+4. Now the most closely-related pair of chocolatesin @tbl-hamming-dist-2 is Mars and Crunchie, with Hamming distance $H=3$, so they have a branch length to their common ancestor of $\frac{3}{2} = 1.5$.
+
+5. We update the distance matrix again. We calculate the _arithmetic mean_ of the distances from Mars and Crunchie to the other chocolates:
+
+| Chocolate              | H(Mars) | H(Crunchie) | H((Mars, Crunchie))      |
+|------------------------|:-------:|:-----------:|:------------------------:|
+| (Smarties, Maltesers)  | 6       |   4         |  $\frac{6 + 4}{2} = 5$   |
+| Tunnocks               | 5       |   4         |  $\frac{5 + 4}{2} = 4.5$ |
+
+: Calculating Hamming distance from (Mars, Crunchie) to the remaining chocolates. {#tbl-dist-calc-2}
+
+6. And once more we update the distance matrix to reflect the newly-calculated values for (Mars, Crunchie) in @tbl-dist-calc-2:
+
+```{r}
+#| label: tbl-hamming-dist-3
+#| tbl-cap: "Hamming distance matrix generated from the chocolate characters."
+#| echo: false
+#| warning: false
+
+distmat <- as.matrix(readr::read_tsv("assets/data/chocolate_short_dist_3.txt",
+                          col_types="ciii"))
+
+as.matrix(distmat) %>%
+  kableExtra::kable(table.attr = "quarto-disable-processing=true") %>%
+  kableExtra::kable_classic_2(full_width=FALSE)
+```
+
+7. Now the most similar pair of chocolates in @tbl-hamming-dist-3 is (Mars, Crunchie) and Tunnock's, with a Hamming distance of 5 (so a branch length to their common ancestor of $\frac{5}{2} = 2.5). They come together to make the new group ((Mars, Crunchie), Tunnock's)
+
+8. Once more we update the distance matrix We calculate the _arithmetic mean_ of the distances from (Mars, Crunchie) and Tunnock's to (Smarties, Maltesers):
+
+| Chocolate             | H((Mars, Crunchie)) | H(Tunnock's) | H(((Mars, Crunchie), Tunnock's)) |
+|-----------------------|:-------------------:|:------------:|:--------------------------------:|
+| (Smarties, Maltesers) | 6                   |   5          |  $\frac{6 + 5}{2} = 5.5$         |
+
+: Calculating Hamming distance from ((Mars, Crunchie), Tunnock's) to (Smarties, Maltesers). {#tbl-dist-calc-3}
+
+9. And now we update the distance matrix to reflect the newly-calculated values for (Mars, Crunchie) in @tbl-dist-calc-3:
+
+```{r}
+#| label: tbl-hamming-dist-4
+#| tbl-cap: "Hamming distance matrix generated from the chocolate characters."
+#| echo: false
+#| warning: false
+
+distmat <- as.matrix(readr::read_tsv("assets/data/chocolate_short_dist_4.txt",
+                          col_types="cdd"))
+
+as.matrix(distmat) %>%
+  kableExtra::kable(table.attr = "quarto-disable-processing=true") %>%
+  kableExtra::kable_classic_2(full_width=FALSE)
+```
+
+10. The last step now is to note that ((Mars, Crunchie), Tunnock's) connects to (Smarties, Maltesers) at a distance of 5.5, so the branch length to each from their common ancestor is $\frac{5.5}{2} = 2.75$.
+
+
+![UPGMA tree, including branch lengths, for the five chocolate varieties.](assets/images/chocolate_tree.new.png){#fig-chocolate-tree width="60%" fig-alt="UPGMA tree calculated for the five chocolate varieties."}
+
+::: { .callout-note title="Interpreting the tree"}
+@fig-chocolate-tree shows what we might have guessed from the distance matrix.
+
+- Smarties and Maltesers are more similar to each other than they are to the other chocolates. This makes sense as both are packets of small elements, not bars.
+- The Mars and Crunchie bars, being bars, are more similar to each other than they are to any of the other chocolates, which are not bars.
+- The Tunnock's Tea Cake is unlike all the other chocolates (it is the deepest-branching chocolate), and probably groups with the Mars Bar and Crunchie because you only get one in a wrapper.
+:::

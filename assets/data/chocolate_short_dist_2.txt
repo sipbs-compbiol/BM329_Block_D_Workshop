@@ -1,0 +1,4 @@
+	"(Smarties, Maltesers)"	"(Mars, Crunchie)"	Tunnock's Tea Cake
+"(Smarties, Maltesers)"	0	6	5
+"(Mars, Crunchie)"	6	0	5
+Tunnock's Tea Cake	5	5	0

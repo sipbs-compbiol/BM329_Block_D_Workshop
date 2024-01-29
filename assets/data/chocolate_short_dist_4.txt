@@ -1,0 +1,3 @@
+	"(Smarties, Maltesers)"	"((Mars, Crunchie), Tunnock's)"
+"(Smarties, Maltesers)"	0	5.5
+"((Mars, Crunchie), Tunnock's)"	5.5	0

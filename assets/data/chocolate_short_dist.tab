@@ -1,6 +1,6 @@
 	Smarties	Mars	Crunchie	Maltesers	Tunnock's Tea Cake
 Smarties	0	6	5	2	5
-Mars		0	3	6	5
-Crunchie			0	3	4
-Maltesers				0	5
-Tunnock's Tea Cake					0
+Mars	6	0	3	6	5
+Crunchie	5	3	0	3	4
+Maltesers	2	6	3	0	5
+Tunnock's Tea Cake	5	5	4	5	0
