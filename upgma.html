@@ -70,9 +70,38 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<link href="site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
-<script src="site_libs/tabwid-1.1.3/tabwid.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -158,7 +187,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#lets-build-a-tree" id="toc-lets-build-a-tree" class="nav-link active" data-scroll-target="#lets-build-a-tree"><span class="header-section-number">2.1</span> Let’s build a tree!</a></li>
+  <li><a href="#lets-build-a-tree" id="toc-lets-build-a-tree" class="nav-link active" data-scroll-target="#lets-build-a-tree"><span class="header-section-number">2.1</span> Let’s build a tree!</a>
+  <ul class="collapse">
+  <li><a href="#making-a-distance-matrix" id="toc-making-a-distance-matrix" class="nav-link" data-scroll-target="#making-a-distance-matrix"><span class="header-section-number">2.1.1</span> Making a distance matrix</a></li>
+  <li><a href="#applying-upgma" id="toc-applying-upgma" class="nav-link" data-scroll-target="#applying-upgma"><span class="header-section-number">2.1.2</span> Applying UPGMA</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/sipbs-compbiol/BM329_Block_A_workshop/edit/main/upgma.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/sipbs-compbiol/BM329_Block_A_workshop/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -184,25 +217,821 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>UPGMA stands for <strong>U</strong>nweighted <strong>P</strong>air <strong>G</strong>roup <strong>M</strong>ethod with <strong>A</strong>rithmetic mean. It is a simple <em>hierarchical clustering method</em> that can be used to produce a rooted dendrogram. This dendrogram represents the structure (<em>clustering</em>) of relationships in a dataset and, <em>when the dataset represents evolutionary distances</em> can be used to produce an evolutionary tree.</p>
-<section id="lets-build-a-tree" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="lets-build-a-tree"><span class="header-section-number">2.1</span> Let’s build a tree!</h2>
+<p>UPGMA stands for <strong>U</strong>nweighted <strong>P</strong>air <strong>G</strong>roup <strong>M</strong>ethod with <strong>A</strong>rithmetic mean. It is a simple <em>hierarchical clustering method</em> that can be used to produce a rooted dendrogram. This dendrogram represents the structure (<em>clustering</em>) of relationships in a dataset.</p>
+<p><em>When the dataset represents evolutionary distances</em>, UPGMA can be used to produce an evolutionary tree.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The basic idea behind UPGMA
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The UPGMA algorithm is fairly strightforward. We start with a group of objects (or organisms) that are dissimilar in some ways that we can measure.</p>
+<ol type="1">
+<li>The first step is to calculate a measure of difference (a <em>distance</em>) between each pair of objects. We combine these into a <em>matrix</em> of distances. Suppose the difference between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is 17, the difference between <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> is 21, and that between <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> is 30, the matrix would look like this:</li>
+</ol>
 <div class="cell">
 <div class="cell-output-display">
-<div class="tabwid"><style>.cl-158eeb2e{}.cl-158100ea{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-15890cea{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-15890cf4{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-158924f0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-158924fa{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-158924fb{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-158924fc{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15892504{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15892505{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-158eeb2e"><thead><tr style="overflow-wrap:break-word;"><th class="cl-158924f0"><p class="cl-15890cea"><span class="cl-158100ea">Chocolate Bar</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Drops?</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Bar?</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Candy shell</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Chocolate</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Peanut</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Coconut</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">More than one element</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Caramel</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Wafer</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Biscuit</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Raisins</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Honeycomb</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Flat?</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Nougat</span></p></th><th class="cl-158924fa"><p class="cl-15890cf4"><span class="cl-158100ea">Marshmallow</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">M&amp;M</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Smarties</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Peanut M&amp;M</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Peanut butter M&amp;M</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Bounty</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Twix</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Kit-Kat</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Dairy Milk</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Snickers</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Fruit &amp; Nut</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Mars</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Milky Way</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Boost</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Crunchie</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Rolo</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Munchies</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Revels</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Maltesers</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Tunnock's Tea Cake</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Wagon Wheel</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-158924fb"><p class="cl-15890cea"><span class="cl-158100ea">Tunnock's Wafer</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-158924fc"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-15892504"><p class="cl-15890cea"><span class="cl-158100ea">Tunnock's Log</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">1</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td><td class="cl-15892505"><p class="cl-15890cf4"><span class="cl-158100ea">0</span></p></td></tr></tbody></table></div>
+<table quarto-disable-processing="true" class=" lightable-paper" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> A </th>
+   <th style="text-align:right;"> B </th>
+   <th style="text-align:right;"> C </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 21 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> B </td>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 30 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+
 </div>
 </div>
+<ol start="2" type="1">
+<li><p>We would start by joining the two most similar objects together. Here these are <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, as the distance between them is the shortest, at 17 units - so we join them together in the tree with a common ancestor halfway between them, at branch length <span class="math inline">\(\frac{17}{2} = 8.5\)</span> units, as in <a href="#fig-upgma-1" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>.</p></li>
+<li><p>In the matrix, we bring <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> together as the new object <span class="math inline">\((A, B)\)</span>, replacing the individual rows and columns for <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> with a single row and column for <span class="math inline">\((A, B)\)</span>. <strong>But we don’t know how what the distance is between this new object and <span class="math inline">\(C\)</span>!</strong></p></li>
+</ol>
 <div class="cell">
 <div class="cell-output-display">
+<table class=" lightable-paper" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:left;"> (A, B) </th>
+   <th style="text-align:left;"> C </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (A, B) </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> ? </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:left;"> ? </td>
+   <td style="text-align:left;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<ol start="3" type="1">
+<li>The <strong>A</strong> in UPGMA tells us how to calculate this value, though: using the <em>arithmetic mean</em>. We take the distances between <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span>, and between <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>, and find their artihmetic mean (i.e.&nbsp;add them and divide by two). Here, that is the average of <span class="math inline">\(21\)</span> and <span class="math inline">\(30\)</span>, which is <span class="math inline">\(\frac{21 + 30}{2} = \frac{51}{2} = 25.5\)</span>, so the distance matrix now looks like this:</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<table quarto-disable-processing="true" class=" lightable-paper" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> (A, B) </th>
+   <th style="text-align:right;"> C </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (A, B) </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 25.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C </td>
+   <td style="text-align:right;"> 25.5 </td>
+   <td style="text-align:right;"> 0.0 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<ol start="4" type="1">
+<li>In the next round of UPGMA, we would join <span class="math inline">\((A, B)\)</span> with <span class="math inline">\(C\)</span> as a distance of 25.5 units, as this is the only connection left to make. The length of the branch from <span class="math inline">\(C\)</span> to the common ancestor is <span class="math inline">\(\frac{25.5}{2} = 12.75\)</span> units, so the distance from the join of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> to that point is <span class="math inline">\(12.75 - 8.5 = 4.25\)</span>, and the tree looks like that in <a href="#fig-upgma-2" class="quarto-xref">Figure&nbsp;<span>2.2</span></a>:</li>
+</ol>
 <div>
-<figure class="figure">
-<p><img src="upgma_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+
+</div>
+<div class="quarto-layout-panel" width="40%" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-upgma-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-upgma-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/upgma_example_1.new.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upgma-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: The first join in the tree: <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> meet with branch lengths 8.5
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-upgma-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-upgma-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/upgma_example.new.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upgma-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: The second join in the tree: <span class="math inline">\((A, B)\)</span> and <span class="math inline">\(C\)</span> meet at a total branch depth of 12.75
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p>The two stages of drawing the example tree: (a) the first join between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>; (b) the addition of <span class="math inline">\(C\)</span>.</p>
+</div>
+</div>
+</div>
+<ol start="5" type="1">
+<li>The final tree can be represented as <span class="math inline">\(((A, B), C)\)</span>: <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> lie within the inner parentheses, reflecting that they are more similar to each other than either is to <span class="math inline">\(C\)</span>.</li>
+</ol>
+<p><strong>For larger datasets, we keep repeating the process until we run out of rows and columns to combine</strong></p>
+</div>
+</div>
+</div>
+<section id="lets-build-a-tree" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="lets-build-a-tree"><span class="header-section-number">2.1</span> Let’s build a tree!</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="We're going to build an evolutionary tree of chocolate!">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+We’re going to build an evolutionary tree of chocolate!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+It’s OK, we know that chocolate bars aren’t evolutionarily related.
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>UPGMA is a clustering algorithm that <em>can</em> be used for evolutionary analysis if the distance matrix describes an evolutionarily-relevant measure, like divergence time since last common ancestor.</p>
+<p>When that’s not the case, it’s just clustering.</p>
+</div>
+</div>
+</div>
+<div id="fig-sweeties" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sweeties-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-sweeties" style="flex-basis: 20.0%;justify-content: flex-start;">
+<div id="fig-crunchie" class="quarto-figure quarto-figure-center quarto-float anchored" alt="A Crunchie bar wrapper">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-crunchie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/Crunchie.jpg" class="img-fluid figure-img" data-ref-parent="fig-sweeties" alt="A Crunchie bar wrapper">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-crunchie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Sticks to your fillings
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-sweeties" style="flex-basis: 20.0%;justify-content: flex-start;">
+<div id="fig-maltesers" class="quarto-figure quarto-figure-center quarto-float anchored" alt="A Malteser bag">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-maltesers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/maltesers.jpg" class="img-fluid figure-img" data-ref-parent="fig-sweeties" alt="A Malteser bag">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-maltesers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Filled with compressed dust
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-sweeties" style="flex-basis: 20.0%;justify-content: flex-start;">
+<div id="fig-mars" class="quarto-figure quarto-figure-center quarto-float anchored" alt="A Mars Bar wrapper">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-mars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/mars.jpg" class="img-fluid figure-img" data-ref-parent="fig-sweeties" alt="A Mars Bar wrapper">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-mars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Helps you work, rest, and destabilise your insulin resistance
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-sweeties" style="flex-basis: 20.0%;justify-content: flex-start;">
+<div id="fig-teacake" class="quarto-figure quarto-figure-center quarto-float anchored" alt="A packet of Smarties">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-teacake-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/smarties.jpg" class="img-fluid figure-img" data-ref-parent="fig-sweeties" alt="A packet of Smarties">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-teacake-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) Will they have the answer?
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-sweeties" style="flex-basis: 20.0%;justify-content: flex-start;">
+<div id="fig-teacake" class="quarto-figure quarto-figure-center quarto-float anchored" alt="A wrapped Tunnock's teacake">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-teacake-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/teacake.png" class="img-fluid figure-img" data-ref-parent="fig-sweeties" alt="A wrapped Tunnock's teacake">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-teacake-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(e) Salute the <em>El Presidente</em> of confectionery
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sweeties-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.3: Six varieties of chocolate for which we will make an evolutionary tree, on the basis of how similar they are to each other.
+</figcaption>
+</figure>
+</div>
+<section id="making-a-distance-matrix" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="making-a-distance-matrix"><span class="header-section-number">2.1.1</span> Making a distance matrix</h3>
+<p>It’s not very obvious how to measure the distances between different kinds of chocolate (other than to get a ruler out and see how far apart they are). This is true in the same way that it’s not obvious how to measure a distance between a cat and a dog, or a human and a whale, or a bacterium and a fungus.</p>
+<p>One approach to defining distances, developed as part of an approach to reconstructing evolution called <em>cladistics</em>, is to define <em>characters</em> that the chocolate types either possess or do not possess. For example, a Mars Bar contains caramel, but a Bounty does not. A Dairy Milk bar is flat, but Smarties are not.</p>
+<p>By defining a set of <em>characters</em>, we can make a table of properties that might be shared, or not, between all our chocolate bars: <a href="#tbl-characters" class="quarto-xref">Table&nbsp;<span>2.1</span></a>.</p>
+<div class="cell">
+<div id="tbl-characters" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-characters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.1: Characters assigned to varieties of chocolate: <code>1</code> indicates character presence, <code>0</code> indicates its absence.
+</figcaption>
+<div aria-describedby="tbl-characters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Chocolate Bar </th>
+   <th style="text-align:right;"> Drops? </th>
+   <th style="text-align:right;"> Bar? </th>
+   <th style="text-align:right;"> Candy shell </th>
+   <th style="text-align:right;"> Chocolate </th>
+   <th style="text-align:right;"> Peanut </th>
+   <th style="text-align:right;"> Coconut </th>
+   <th style="text-align:right;"> More than one element </th>
+   <th style="text-align:right;"> Caramel </th>
+   <th style="text-align:right;"> Wafer </th>
+   <th style="text-align:right;"> Biscuit </th>
+   <th style="text-align:right;"> Raisins </th>
+   <th style="text-align:right;"> Honeycomb </th>
+   <th style="text-align:right;"> Flat? </th>
+   <th style="text-align:right;"> Nougat </th>
+   <th style="text-align:right;"> Marshmallow </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Smarties </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mars </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Crunchie </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Maltesers </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tunnock's Tea Cake </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>But these aren’t themselves distances, so how can we get a distance from this kind of data?</p>
+<div class="callout callout-style-default callout-caution callout-titled" title="Hamming Distance">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hamming Distance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>One way we can calculate distances between rows of character tables like <a href="#tbl-characters" class="quarto-xref">Table&nbsp;<span>2.1</span></a> is by using the Hamming distance. Here’s an example.</p>
+<p>Suppose you have a table with two rows that look like <a href="#tbl-hamming-chrs" class="quarto-xref">Table&nbsp;<span>2.2</span></a></p>
+<div class="cell">
+<div id="tbl-hamming-chrs" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hamming-chrs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.2: A pair of objects with characters that are either present (<code>1</code>) or absent (<code>0</code>).
+</figcaption>
+<div aria-describedby="tbl-hamming-chrs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> group </th>
+   <th style="text-align:right;"> hyphae </th>
+   <th style="text-align:right;"> chitin </th>
+   <th style="text-align:right;"> cellulose </th>
+   <th style="text-align:right;"> spores </th>
+   <th style="text-align:right;"> legs </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> fungi </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> oomycete </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>We can look along the rows and count up the number of columns that differ. <code>hyphae</code>, <code>spores</code>, and <code>legs</code> character values are the same for both fungi and oomycetes. But they differ in <code>chitin</code> and <code>cellulose</code> - two characters. So the Hamming Distance between fungi and oomycetes here is <span class="math inline">\(H = 2\)</span>.</p>
+<p>We can calculate similar Hamming distances for each pair of chocolotes in <a href="#tbl-characters" class="quarto-xref">Table&nbsp;<span>2.1</span></a>, to produce the distance matrix in <a href="#tbl-hamming-dist" class="quarto-xref">Table&nbsp;<span>2.3</span></a></p>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-hamming-dist" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hamming-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.3: Hamming distance matrix generated from the chocolate characters.
+</figcaption>
+<div aria-describedby="tbl-hamming-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> ...1 </th>
+   <th style="text-align:left;"> Smarties </th>
+   <th style="text-align:left;"> Mars </th>
+   <th style="text-align:left;"> Crunchie </th>
+   <th style="text-align:left;"> Maltesers </th>
+   <th style="text-align:left;"> Tunnock's Tea Cake </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Smarties </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 6 </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> 2 </td>
+   <td style="text-align:left;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mars </td>
+   <td style="text-align:left;"> 6 </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 3 </td>
+   <td style="text-align:left;"> 6 </td>
+   <td style="text-align:left;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Crunchie </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> 3 </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 3 </td>
+   <td style="text-align:left;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Maltesers </td>
+   <td style="text-align:left;"> 2 </td>
+   <td style="text-align:left;"> 6 </td>
+   <td style="text-align:left;"> 3 </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tunnock's Tea Cake </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> 4 </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="applying-upgma" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="applying-upgma"><span class="header-section-number">2.1.2</span> Applying UPGMA</h3>
+<ol type="1">
+<li><p>As with the example in the drop-down box above, we start by identifying the most similar chocolates. Here, that is Maltesers and Smarties, with a distance of <span class="math inline">\(H=2\)</span>. We combine these into the group (Smarties, Maltesers), and note they have a branch length to their common ancestor of <span class="math inline">\(\frac{2}{2} = 1\)</span>.</p></li>
+<li><p>Now we update the distance matrix. We need to calculate the <em>arithmetic mean</em> of the distances from Smarties and Maltesers to each other variety of chocolate. These distances are given in <a href="#tbl-dist-calc-1" class="quarto-xref">Table&nbsp;<span>2.4</span></a>:</p></li>
+</ol>
+<div id="tbl-dist-calc-1" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dist-calc-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.4: Calculating Hamming distance from (Smarties, Maltesers) to the other chocolates.
+</figcaption>
+<div aria-describedby="tbl-dist-calc-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<thead>
+<tr class="header">
+<th>Chocolate</th>
+<th style="text-align: center;">H(Smarties)</th>
+<th style="text-align: center;">H(Maltesers)</th>
+<th style="text-align: center;">H((Smarties, Maltesers))</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mars</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;"><span class="math inline">\(\frac{6 + 6}{2} = 6\)</span></td>
+</tr>
+<tr class="even">
+<td>Crunchie</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"><span class="math inline">\(\frac{5 + 3}{2} = 4\)</span></td>
+</tr>
+<tr class="odd">
+<td>Tunnocks</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"><span class="math inline">\(\frac{5 + 5}{2} = 5\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<ol start="3" type="1">
+<li>Next we take out the individual Smarties and Maltesers rows and columns from the distance matrix, and replace them with a new row and column that reflects the combined (Smarties, Maltesers) ancestor distances from <a href="#tbl-dist-calc-1" class="quarto-xref">Table&nbsp;<span>2.4</span></a>:</li>
+</ol>
+<div class="cell">
+<div id="tbl-hamming-dist-2" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hamming-dist-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.5: Hamming distance matrix generated from the chocolate characters.
+</figcaption>
+<div aria-describedby="tbl-hamming-dist-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> ...1 </th>
+   <th style="text-align:left;"> (Smarties, Maltesers) </th>
+   <th style="text-align:left;"> (Mars, Crunchie) </th>
+   <th style="text-align:left;"> Tunnock's Tea Cake </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Smarties, Maltesers) </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 6 </td>
+   <td style="text-align:left;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (Mars, Crunchie) </td>
+   <td style="text-align:left;"> 6 </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tunnock's Tea Cake </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<ol start="4" type="1">
+<li><p>Now the most closely-related pair of chocolatesin <a href="#tbl-hamming-dist-2" class="quarto-xref">Table&nbsp;<span>2.5</span></a> is Mars and Crunchie, with Hamming distance <span class="math inline">\(H=3\)</span>, so they have a branch length to their common ancestor of <span class="math inline">\(\frac{3}{2} = 1.5\)</span>.</p></li>
+<li><p>We update the distance matrix again. We calculate the <em>arithmetic mean</em> of the distances from Mars and Crunchie to the other chocolates:</p></li>
+</ol>
+<div id="tbl-dist-calc-2" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dist-calc-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.6: Calculating Hamming distance from (Mars, Crunchie) to the remaining chocolates.
+</figcaption>
+<div aria-describedby="tbl-dist-calc-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 12%">
+<col style="width: 18%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Chocolate</th>
+<th style="text-align: center;">H(Mars)</th>
+<th style="text-align: center;">H(Crunchie)</th>
+<th style="text-align: center;">H((Mars, Crunchie))</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Smarties, Maltesers)</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><span class="math inline">\(\frac{6 + 4}{2} = 5\)</span></td>
+</tr>
+<tr class="even">
+<td>Tunnocks</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><span class="math inline">\(\frac{5 + 4}{2} = 4.5\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<ol start="6" type="1">
+<li>And once more we update the distance matrix to reflect the newly-calculated values for (Mars, Crunchie) in <a href="#tbl-dist-calc-2" class="quarto-xref">Table&nbsp;<span>2.6</span></a>:</li>
+</ol>
+<div class="cell">
+<div id="tbl-hamming-dist-3" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hamming-dist-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.7: Hamming distance matrix generated from the chocolate characters.
+</figcaption>
+<div aria-describedby="tbl-hamming-dist-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> ...1 </th>
+   <th style="text-align:left;"> (Smarties, Maltesers) </th>
+   <th style="text-align:left;"> (Mars, Crunchie) </th>
+   <th style="text-align:left;"> Tunnock's Tea Cake </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Smarties, Maltesers) </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 6 </td>
+   <td style="text-align:left;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (Mars, Crunchie) </td>
+   <td style="text-align:left;"> 6 </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tunnock's Tea Cake </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<ol start="7" type="1">
+<li><p>Now the most similar pair of chocolates in <a href="#tbl-hamming-dist-3" class="quarto-xref">Table&nbsp;<span>2.7</span></a> is (Mars, Crunchie) and Tunnock’s, with a Hamming distance of 5 (so a branch length to their common ancestor of $ = 2.5). They come together to make the new group ((Mars, Crunchie), Tunnock’s)</p></li>
+<li><p>Once more we update the distance matrix We calculate the <em>arithmetic mean</em> of the distances from (Mars, Crunchie) and Tunnock’s to (Smarties, Maltesers):</p></li>
+</ol>
+<div id="tbl-dist-calc-3" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dist-calc-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.8: Calculating Hamming distance from ((Mars, Crunchie), Tunnock’s) to (Smarties, Maltesers).
+</figcaption>
+<div aria-describedby="tbl-dist-calc-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 22%">
+<col style="width: 15%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Chocolate</th>
+<th style="text-align: center;">H((Mars, Crunchie))</th>
+<th style="text-align: center;">H(Tunnock’s)</th>
+<th style="text-align: center;">H(((Mars, Crunchie), Tunnock’s))</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Smarties, Maltesers)</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"><span class="math inline">\(\frac{6 + 5}{2} = 5.5\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<ol start="9" type="1">
+<li>And now we update the distance matrix to reflect the newly-calculated values for (Mars, Crunchie) in <a href="#tbl-dist-calc-3" class="quarto-xref">Table&nbsp;<span>2.8</span></a>:</li>
+</ol>
+<div class="cell">
+<div id="tbl-hamming-dist-4" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hamming-dist-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.9: Hamming distance matrix generated from the chocolate characters.
+</figcaption>
+<div aria-describedby="tbl-hamming-dist-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class=" lightable-classic-2" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> ...1 </th>
+   <th style="text-align:left;"> (Smarties, Maltesers) </th>
+   <th style="text-align:left;"> ((Mars, Crunchie), Tunnock's) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Smarties, Maltesers) </td>
+   <td style="text-align:left;"> 0.0 </td>
+   <td style="text-align:left;"> 5.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ((Mars, Crunchie), Tunnock's) </td>
+   <td style="text-align:left;"> 5.5 </td>
+   <td style="text-align:left;"> 0.0 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<ol start="10" type="1">
+<li>The last step now is to note that ((Mars, Crunchie), Tunnock’s) connects to (Smarties, Maltesers) at a distance of 5.5, so the branch length to each from their common ancestor is <span class="math inline">\(\frac{5.5}{2} = 2.75\)</span>.</li>
+</ol>
+<div id="fig-chocolate-tree" class="quarto-figure quarto-figure-center quarto-float anchored" alt="UPGMA tree calculated for the five chocolate varieties.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chocolate-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/images/chocolate_tree.new.png" class="img-fluid figure-img" style="width:60.0%" alt="UPGMA tree calculated for the five chocolate varieties.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chocolate-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.4: UPGMA tree, including branch lengths, for the five chocolate varieties.
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpreting the tree">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpreting the tree
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="#fig-chocolate-tree" class="quarto-xref">Figure&nbsp;<span>2.4</span></a> shows what we might have guessed from the distance matrix.</p>
+<ul>
+<li>Smarties and Maltesers are more similar to each other than they are to the other chocolates. This makes sense as both are packets of small elements, not bars.</li>
+<li>The Mars and Crunchie bars, being bars, are more similar to each other than they are to any of the other chocolates, which are not bars.</li>
+<li>The Tunnock’s Tea Cake is unlike all the other chocolates (it is the deepest-branching chocolate), and probably groups with the Mars Bar and Crunchie because you only get one in a wrapper.</li>
+</ul>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
