@@ -12,7 +12,8 @@ Depends:
 Imports:
     tidyverse (>= 2.0.0),
     ggplot2,
-    flextable
+    flextable,
+    kableExtra
 Suggests:
     knitr,
     sessioninfo
