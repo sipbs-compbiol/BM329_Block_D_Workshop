@@ -1,11 +1,120 @@
+---
+format:
+  html:
+    html-table-processing: none
+---
+
 # UPGMA
 
-UPGMA stands for **U**nweighted **P**air **G**roup **M**ethod with **A**rithmetic mean. It is a simple _hierarchical clustering method_ that can be used to produce a rooted dendrogram. This dendrogram represents the structure (_clustering_) of relationships in a dataset and, _when the dataset represents evolutionary distances_ can be used to produce an evolutionary tree.
+```{r}
+#| echo: FALSE
+#| warning: FALSE
+
+library(dplyr)
+```
+
+UPGMA stands for **U**nweighted **P**air **G**roup **M**ethod with **A**rithmetic mean. It is a simple _hierarchical clustering method_ that can be used to produce a rooted dendrogram. This dendrogram represents the structure (_clustering_) of relationships in a dataset.
+
+_When the dataset represents evolutionary distances_, UPGMA can be used to produce an evolutionary tree.
+
+::: { .callout-tip collapse="true"}
+## The basic idea behind UPGMA
+
+The UPGMA algorithm is fairly strightforward. We start with a group of objects (or organisms) that are dissimilar in some ways that we can measure.
+
+1. The first step is to calculate a measure of difference (a _distance_) between each pair of objects. We combine these into a _matrix_ of distances. Suppose the difference between $A$ and $B$ is 17, the difference between $A$ and $C$ is 21, and that between $B$ and $C$ is 30, the matrix would look like this:
+
+```{r}
+#| echo: FALSE
+#| warning: FALSE
+
+mat <- matrix(c(0, 17, 21, 17, 0, 30, 21, 30, 0), ncol=3, 
+             dimnames=list(c("A", "B", "C"), c("A", "B", "C")))
+mat %>%
+  kableExtra::kbl(table.attr = "quarto-disable-processing=true") %>%
+  kableExtra::kable_paper(full_width=FALSE)
+```
+
+2. We would start by joining the two most similar objects together. Here these are $A$ and $B$, as the distance between them is the shortest, at 17 units - so we join them together in the tree with a common ancestor halfway between them, at branch length $\frac{17}{2} = 8.5$ units, as in @fig-upgma-1.
+
+3. In the matrix, we bring $A$ and $B$ together as the new object $(A, B)$, replacing the individual rows and columns for $A$ and $B$ with a single row and column for $(A, B)$. **But we don't know how what the distance is between this new object and $C$!**
+
+```{r}
+#| echo: FALSE
+#| warning: FALSE
+
+mat <- matrix(c(0, "?", "?", 0), ncol=2, 
+             dimnames=list(c("(A, B)", "C"), c("(A, B)", "C")))
+mat %>%
+  kableExtra::kable(table.attr = "quarto-disable-processing=true") %>%
+  kableExtra::kable_paper(full_width=FALSE)
+```
+
+3. The **A** in UPGMA tells us how to calculate this value, though: using the _arithmetic mean_. We take the distances between $A$ and $C$, and between $B$ and $C$, and find their artihmetic mean (i.e. add them and divide by two). Here, that is the average of $21$ and $30$, which is $\frac{21 + 30}{2} = \frac{51}{2} = 25.5$, so the distance matrix now looks like this:
+
+```{r}
+#| echo: FALSE
+#| warning: FALSE
+
+mat <- matrix(c(0, 25.5, 25.5, 0), ncol=2, 
+             dimnames=list(c("(A, B)", "C"), c("(A, B)", "C")))
+mat %>%
+  kableExtra::kbl(table.attr = "quarto-disable-processing=true") %>%
+  kableExtra::kable_paper(full_width=FALSE)
+```
+
+4. In the next round of UPGMA, we would join $(A, B)$ with $C$ as a distance of 25.5 units, as this is the only connection left to make. The length of the branch from $C$ to the common ancestor is $\frac{25.5}{2} = 12.75$ units, so the distance from the join of $A$ and $B$ to that point is $12.75 - 8.5 = 4.25$, and the tree looks like that in @fig-upgma-2:
+
+::: {layout-ncol=2 width="40%"}
+
+![The first join in the tree: $A$ and $B$ meet with branch lengths 8.5](assets/images/upgma_example_1.new.png){#fig-upgma-1}
+
+
+![The second join in the tree: $(A, B)$ and $C$ meet at a total branch depth of 12.75](assets/images/upgma_example.new.png){#fig-upgma-2}
+
+The two stages of drawing the example tree: (a) the first join between $A$ and $B$; (b) the addition of $C$.
+:::
+
+
+5. The final tree can be represented as $((A, B), C)$: $A$ and $B$ lie within the inner parentheses, reflecting that they are more similar to each other than either is to $C$.
+:::
+
 
 ## Let's build a tree!
 
+::: { .callout-important title="We're going to build an evolutionary tree of chocolate!"}
+:::
+
+::: { .callout-note collapse="true"}
+## It's OK, we know that chocolate bars aren't evolutionarily related.
+
+UPGMA is a clustering algorithm that _can_ be used for evolutionary analysis if the distance matrix describes an evolutionarily-relevant measure, like divergence time since last common ancestor.
+
+When that's not the case, it's just clustering.
+:::
+
+::: {#fig-sweeties layout-ncol=3 width="80%"}
+
+![Sticks to your fillings](assets/images/Crunchie.jpg){#fig-crunchie fig-alt="A Crunchie bar wrapper"}
+
+![I'm the only one in the family who likes these](assets/images/bounty.jpg){#fig-bounty fig-alt="A Bounty wrapper"}
+
+![Better than American chocolate](assets/images/dairy_milk.png){#fig-dairy-milk fig-alt="A Dairy Milk wrapper"}
+
+![Filled with compressed dust](assets/images/maltesers.jpg){#fig-maltesers fig-alt="A Malteser bag"}
+
+![Helps you work, rest, and destabilise your insulin resistance](assets/images/mars.jpg){#fig-mars fig-alt="A Mars Bar wrapper"}
+
+![Salute the _El Presidente_ of confectionery](assets/images/teacake.png){#fig-teacake fig-alt="A wrapped Tunnock's teacake"}
+
+
+Six varieties of chocolate for which we will make an evolutionary tree, on the basis of how similar they are to each other.
+:::
+
+### Making a distance matrix
+
 ```{r echo=FALSE, warning=FALSE}
-data <- readr::read_tsv("assets/data/chocolate_full.tab",
+data <- readr::read_tsv("assets/data/chocolate_short.tab",
                           col_types="ciiiiiiiiiiiiiii")
 rownames(data) <- data$`Chocolate Bar`
 flextable::flextable(data)
