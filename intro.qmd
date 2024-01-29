@@ -48,7 +48,7 @@ There is more than one kind of dendrogram. Two types you will meet frequently ar
 
 ![Cladogram](assets/images/example_tree_clado.png){#fig-clado}
 
-In a phylogram the branch lengths may be uneven. They represent evolutionary time between _nodes_ (divergences and/or leaves on the tree), and the time between those may vary. In a cladogram the branch lengths are identical and the tree only represents _topology_ - the order in which branches diverge.
+The same evolutionary tree represented as a _phylogram_, and as a _cladogram_. In a phylogram the branch lengths may be uneven. They represent evolutionary time between _nodes_ (divergences and/or leaves on the tree), and the time between those may vary. In a cladogram the branch lengths are identical and the tree only represents _topology_ - the order in which branches diverge.
 :::
 
 ### Topology
