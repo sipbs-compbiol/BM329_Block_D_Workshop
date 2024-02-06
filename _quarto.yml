@@ -3,7 +3,7 @@ project:
   output-dir: _book
 
 book:
-  title: "BM329 Workshop B: Diseases of the Respiratory Tract Supporting Information"
+  title: "BM329 Workshop B: Diseases of the Respiratory Tract - Supporting Information"
   reader-mode: true
   
   cover-image: sipbs_compbio_800.png
