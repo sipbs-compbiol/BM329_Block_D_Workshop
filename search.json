@@ -118,5 +118,15 @@
     "crumbs": [
       "References"
     ]
+  },
+  {
+    "objectID": "additional_files.html",
+    "href": "additional_files.html",
+    "title": "Additional Files",
+    "section": "",
+    "text": "The files below are included to support workshop setup, if you are hosting this workshop yourself\n\nREADME.md: instructions and advice for workshop pre-preparation\nflu-virus-strips.docx: Printable document with ’flu virus alleles for composing ’flu genomes\nflu-virus-strips-zoonotic.docx: Printable document with ’flu virus alleles for the additional zoonotic infection round\nBM329_Workshop_B_Instructions.docx: Printable document with workshop instructions for students\nBM329_Workshop_B_Instructions_For_Additional_Round_If_Time.docx: Printable document with workshop instructions for students, for additional rounds of evolution\nBM329_Workshop_B_PPT_Intro.pptx: Powerpoint slides for the workshop introduction",
+    "crumbs": [
+      "Additional Files"
+    ]
   }
 ]
