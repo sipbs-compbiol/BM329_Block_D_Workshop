@@ -1,6 +1,6 @@
 # Summary
 
-In this workshop, you should now understand:
+After reading these workshop materials, you should now understand:
 
 1. How phylogenetic trees represent evolution as a series of divergences that branch out from a single common ancestor.
 2. How _phylograms_ and _cladograms_ differ.

@@ -25,7 +25,14 @@ By the end of this workshop, students will be able to:
 - Discuss the effects of vaccination and antiviral drugs on influenza virus evolution and public health
 - Build phylogenetic trees representing the evolution of influenza viruses
 
+After reading the materials presented in this online component students will be able to understand:
+
+1. How phylogenetic trees represent evolution as a series of divergences that branch out from a single common ancestor.
+2. How _phylograms_ and _cladograms_ differ.
+3. How the same tree can look different, depending how branches are rotated, but because the _topology_ remains the same, it represents the same evolutionary history.
+4. How to produce a Hamming distance matrix from a table of characters.
+5. How to use the UPGMA algorithm to produce a dendrogram from a distance matrix.
 
 ## Assessment
 
-This workshop activity itself is not formally assessed although, as noted, the material it contains is examinable. 
+This workshop activity itself is not formally assessed although, as noted, the material it contains is examinable.
