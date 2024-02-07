@@ -12,3 +12,6 @@ _freeze/
 
 # macOS files
 .DS_Store
+
+# Office temp files
+~*
