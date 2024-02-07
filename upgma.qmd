@@ -35,7 +35,7 @@ mat %>%
   kableExtra::kable_paper(full_width=FALSE)
 ```
 
-2. We would start by joining the two most similar objects together. Here these are $A$ and $B$, as the distance between them is the shortest, at 17 units - so we join them together in the tree with a common ancestor halfway between them, at branch length $\frac{17}{2} = 8.5$ units, as in @fig-upgma-1.
+2. We would start by joining the two most similar objects together - those separated by the smallest difference. Here these are $A$ and $B$, as the distance between them is the shortest, at 17 units - so we join them together in the tree with a common ancestor halfway between them, at branch length $\frac{17}{2} = 8.5$ units, as in @fig-upgma-1.
 
 3. In the matrix, we bring $A$ and $B$ together as the new object $(A, B)$, replacing the individual rows and columns for $A$ and $B$ with a single row and column for $(A, B)$. **But we don't know how what the distance is between this new object and $C$!**
 
@@ -50,7 +50,7 @@ mat %>%
   kableExtra::kable_paper(full_width=FALSE)
 ```
 
-3. The **A** in UPGMA tells us how to calculate this value, though: using the _arithmetic mean_. We take the distances between $A$ and $C$, and between $B$ and $C$, and find their artihmetic mean (i.e. add them and divide by two). Here, that is the average of $21$ and $30$, which is $\frac{21 + 30}{2} = \frac{51}{2} = 25.5$, so the distance matrix now looks like this:
+4. The **A** in UPGMA tells us how to calculate this value, though: using the _arithmetic mean_. We take the distances between $A$ and $C$, and between $B$ and $C$, and find their artihmetic mean (i.e. add them and divide by two). Here, that is the average of $21$ and $30$, which is $\frac{21 + 30}{2} = \frac{51}{2} = 25.5$, so the distance matrix now looks like this:
 
 ```{r}
 #| echo: FALSE
@@ -63,14 +63,15 @@ mat %>%
   kableExtra::kable_paper(full_width=FALSE)
 ```
 
-4. In the next round of UPGMA, we would join $(A, B)$ with $C$ as a distance of 25.5 units, as this is the only connection left to make. The length of the branch from $C$ to the common ancestor is $\frac{25.5}{2} = 12.75$ units, so the distance from the join of $A$ and $B$ to that point is $12.75 - 8.5 = 4.25$, and the tree looks like that in @fig-upgma-2:
+5. In the next round of UPGMA, we would join $(A, B)$ with $C$ as a distance of 25.5 units, as this is the only connection left to make. But this distance is that between the two objects. If we assume that they are equally-related to their "common ancestor," where they meet up, then the length of the branch from $C$ to the common ancestor is $\frac{25.5}{2} = 12.75$ units, so the distance from the join of $A$ and $B$ to that point is $12.75 - 8.5 = 4.25$, and the tree looks like that in @fig-upgma-2:
 
-::: {layout-ncol=2 width="40%"}
+::: {#fig-upgma-intro layout-ncol=2}
 
 ![The first join in the tree: $A$ and $B$ meet with branch lengths 8.5](assets/images/upgma_example_1.new.png){#fig-upgma-1}
 
 
 ![The second join in the tree: $(A, B)$ and $C$ meet at a total branch depth of 12.75](assets/images/upgma_example.new.png){#fig-upgma-2}
+
 
 The two stages of drawing the example tree: (a) the first join between $A$ and $B$; (b) the addition of $C$.
 :::
@@ -114,7 +115,7 @@ Six varieties of chocolate for which we will make an evolutionary tree, on the b
 
 It's not very obvious how to measure the distances between different kinds of chocolate (other than to get a ruler out and see how far apart they are). This is true in the same way that it's not obvious how to measure a distance between a cat and a dog, or a human and a whale, or a bacterium and a fungus.
 
-One approach to defining distances, developed as part of an approach to reconstructing evolution called _cladistics_, is to define _characters_ that the chocolate types either possess or do not possess. For example, a Mars Bar contains caramel, but a Bounty does not. A Dairy Milk bar is flat, but Smarties are not.
+One approach to defining distances, developed as part of an approach to reconstructing evolution called [_cladistics_](https://evolution.berkeley.edu/phylogenetic-systematics/reconstructing-trees-cladistics/), is to define _characters_ that the chocolate types either possess or do not possess. For example, a Mars Bar contains caramel, but a Bounty does not. A Dairy Milk bar is flat, but Smarties are not.
 
 By defining a set of _characters_, we can make a table of properties that might be shared, or not, between all our chocolate bars: @tbl-characters.
 
@@ -188,13 +189,17 @@ as.matrix(distmat) %>%
 | Crunchie  | 5           |   3          |  $\frac{5 + 3}{2} = 4$   |
 | Tunnocks  | 5           |   5          |  $\frac{5 + 5}{2} = 5$   |
 
-: Calculating Hamming distance from (Smarties, Maltesers) to the other chocolates. {#tbl-dist-calc-1}
+: Calculating distance from (Smarties, Maltesers) to the other chocolates. {#tbl-dist-calc-1}
+
+::: { .callout-note }
+Once we start taking averages, the distances are no longer Hamming distances, technically. But we'll carry on using the $H(object1, object2)$ form, for convenience.
+:::
 
 3. Next we take out the individual Smarties and Maltesers rows and columns from the distance matrix, and replace them with a new row and column that reflects the combined (Smarties, Maltesers) ancestor distances from @tbl-dist-calc-1:
 
 ```{r}
 #| label: tbl-hamming-dist-2
-#| tbl-cap: "Hamming distance matrix generated from the chocolate characters."
+#| tbl-cap: "Distance matrix generated from the chocolate characters."
 #| echo: false
 #| warning: false
 
@@ -206,7 +211,7 @@ as.matrix(distmat) %>%
   kableExtra::kable_classic_2(full_width=FALSE)
 ```
 
-4. Now the most closely-related pair of chocolatesin @tbl-hamming-dist-2 is Mars and Crunchie, with Hamming distance $H=3$, so they have a branch length to their common ancestor of $\frac{3}{2} = 1.5$.
+4. Now the most closely-related pair of chocolates in @tbl-hamming-dist-2 is Mars and Crunchie, with distance $H=3$, so they have a branch length to their common ancestor of $\frac{3}{2} = 1.5$.
 
 5. We update the distance matrix again. We calculate the _arithmetic mean_ of the distances from Mars and Crunchie to the other chocolates:
 
@@ -215,13 +220,13 @@ as.matrix(distmat) %>%
 | (Smarties, Maltesers)  | 6       |   4         |  $\frac{6 + 4}{2} = 5$   |
 | Tunnocks               | 5       |   4         |  $\frac{5 + 4}{2} = 4.5$ |
 
-: Calculating Hamming distance from (Mars, Crunchie) to the remaining chocolates. {#tbl-dist-calc-2}
+: Calculating distance from (Mars, Crunchie) to the remaining chocolates. {#tbl-dist-calc-2}
 
 6. And once more we update the distance matrix to reflect the newly-calculated values for (Mars, Crunchie) in @tbl-dist-calc-2:
 
 ```{r}
 #| label: tbl-hamming-dist-3
-#| tbl-cap: "Hamming distance matrix generated from the chocolate characters."
+#| tbl-cap: "Distance matrix generated from the chocolate characters."
 #| echo: false
 #| warning: false
 
@@ -233,7 +238,7 @@ as.matrix(distmat) %>%
   kableExtra::kable_classic_2(full_width=FALSE)
 ```
 
-7. Now the most similar pair of chocolates in @tbl-hamming-dist-3 is (Mars, Crunchie) and Tunnock's, with a Hamming distance of 5 (so a branch length to their common ancestor of $\frac{5}{2} = 2.5). They come together to make the new group ((Mars, Crunchie), Tunnock's)
+7. Now the most similar pair of chocolates in @tbl-hamming-dist-3 is (Mars, Crunchie) and Tunnock's, with a distance of 5 (so a branch length to their common ancestor of $\frac{5}{2} = 2.5). They come together to make the new group ((Mars, Crunchie), Tunnock's)
 
 8. Once more we update the distance matrix We calculate the _arithmetic mean_ of the distances from (Mars, Crunchie) and Tunnock's to (Smarties, Maltesers):
 
@@ -241,13 +246,13 @@ as.matrix(distmat) %>%
 |-----------------------|:-------------------:|:------------:|:--------------------------------:|
 | (Smarties, Maltesers) | 6                   |   5          |  $\frac{6 + 5}{2} = 5.5$         |
 
-: Calculating Hamming distance from ((Mars, Crunchie), Tunnock's) to (Smarties, Maltesers). {#tbl-dist-calc-3}
+: Calculating distance from ((Mars, Crunchie), Tunnock's) to (Smarties, Maltesers). {#tbl-dist-calc-3}
 
 9. And now we update the distance matrix to reflect the newly-calculated values for (Mars, Crunchie) in @tbl-dist-calc-3:
 
 ```{r}
 #| label: tbl-hamming-dist-4
-#| tbl-cap: "Hamming distance matrix generated from the chocolate characters."
+#| tbl-cap: "Distance matrix generated from the chocolate characters."
 #| echo: false
 #| warning: false
 
@@ -268,6 +273,6 @@ as.matrix(distmat) %>%
 @fig-chocolate-tree shows what we might have guessed from the distance matrix.
 
 - Smarties and Maltesers are more similar to each other than they are to the other chocolates. This makes sense as both are packets of small elements, not bars.
-- The Mars and Crunchie bars, being bars, are more similar to each other than they are to any of the other chocolates, which are not bars.
-- The Tunnock's Tea Cake is unlike all the other chocolates (it is the deepest-branching chocolate), and probably groups with the Mars Bar and Crunchie because you only get one in a wrapper.
+- The Mars and Crunchie bars, being bar-shaped and wrapped in chocolate, are more similar to each other than they are to any of the other chocolates, which are not bars.
+- The Tunnock's Tea Cake is unlike all the other chocolates (it is the deepest-branching chocolate), and probably groups with the Mars Bar and Crunchie because you only get one in a wrapper. If there were two in a packet, or it was a box of teacakes, the tree might have looked different.
 :::

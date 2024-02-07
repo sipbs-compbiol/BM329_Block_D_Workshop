@@ -9,7 +9,7 @@ After reading these workshop materials, you should now understand:
 5. How to use the UPGMA algorithm to produce a dendrogram from a distance matrix.
 
 ::: { .callout-warning title="Thank you" }
-That's almost the end of the workshop. Thank you for participating. We hope you found it enjoyable and interesting, and that you now understand more about how phylogenetic trees can be constructed.
+That's almost the end of this online material. Thank you for reading We hope you found it enjoyable and interesting, and that you now understand more about how phylogenetic trees can be constructed.
 
 This year is the first presentation of this particular material, and we would be very grateful to hear feedback [by email](mailto:{{< var admin.email >}}) or through the [GitHub repository Issues page]({{< var github.issues >}}).
 :::
