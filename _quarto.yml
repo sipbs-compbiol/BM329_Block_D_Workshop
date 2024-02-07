@@ -28,6 +28,7 @@ book:
     - upgma.qmd
     - summary.qmd
     - references.qmd
+    - additional_files.qmd
 
 bibliography: references.bib
 

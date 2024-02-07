@@ -1,0 +1,10 @@
+# Additional Files { .unnumbered }
+
+The files below are included to support workshop setup, if you are hosting this workshop yourself
+
+- [`README.md`](assets/workshop-materials/README.md): instructions and advice for workshop pre-preparation
+- [`flu-virus-strips.docx`](assets/workshop-materials/flu-virus-strips.docx): Printable document with 'flu virus alleles for composing 'flu genomes
+- [`flu-virus-strips-zoonotic.docx`](assets/workshop-materials/flu-virus-strips-zoonotic.docx): Printable document with 'flu virus alleles for the additional zoonotic infection round
+- [`BM329_Workshop_B_Instructions.docx`](assets/workshop-materials/BM329_Workshop_B_Instructions.docx): Printable document with workshop instructions for students
+- [`BM329_Workshop_B_Instructions_For_Additional_Round_If_Time.docx`](assets/workshop-materials/BM329_Workshop_B_Instructions_For_Additional_Round_If_Time.docx): Printable document with workshop instructions for students, for additional rounds of evolution
+- [`BM329_Workshop_B_PPT_Intro.pptx`](assets/workshop-materials/BM329_Workshop_B_PPT_Intro.pptx): Powerpoint slides for the workshop introduction
