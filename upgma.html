@@ -277,7 +277,7 @@ The basic idea behind UPGMA
 </div>
 </div>
 <ol start="2" type="1">
-<li><p>We would start by joining the two most similar objects together. Here these are <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, as the distance between them is the shortest, at 17 units - so we join them together in the tree with a common ancestor halfway between them, at branch length <span class="math inline">\(\frac{17}{2} = 8.5\)</span> units, as in <a href="#fig-upgma-1" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>.</p></li>
+<li><p>We would start by joining the two most similar objects together - those separated by the smallest difference. Here these are <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, as the distance between them is the shortest, at 17 units - so we join them together in the tree with a common ancestor halfway between them, at branch length <span class="math inline">\(\frac{17}{2} = 8.5\)</span> units, as in <a href="#fig-upgma-1" class="quarto-xref">Figure&nbsp;<span>2.1 (a)</span></a>.</p></li>
 <li><p>In the matrix, we bring <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> together as the new object <span class="math inline">\((A, B)\)</span>, replacing the individual rows and columns for <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> with a single row and column for <span class="math inline">\((A, B)\)</span>. <strong>But we don’t know how what the distance is between this new object and <span class="math inline">\(C\)</span>!</strong></p></li>
 </ol>
 <div class="cell">
@@ -306,7 +306,7 @@ The basic idea behind UPGMA
 
 </div>
 </div>
-<ol start="3" type="1">
+<ol start="4" type="1">
 <li>The <strong>A</strong> in UPGMA tells us how to calculate this value, though: using the <em>arithmetic mean</em>. We take the distances between <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span>, and between <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>, and find their artihmetic mean (i.e.&nbsp;add them and divide by two). Here, that is the average of <span class="math inline">\(21\)</span> and <span class="math inline">\(30\)</span>, which is <span class="math inline">\(\frac{21 + 30}{2} = \frac{51}{2} = 25.5\)</span>, so the distance matrix now looks like this:</li>
 </ol>
 <div class="cell">
@@ -335,44 +335,43 @@ The basic idea behind UPGMA
 
 </div>
 </div>
-<ol start="4" type="1">
-<li>In the next round of UPGMA, we would join <span class="math inline">\((A, B)\)</span> with <span class="math inline">\(C\)</span> as a distance of 25.5 units, as this is the only connection left to make. The length of the branch from <span class="math inline">\(C\)</span> to the common ancestor is <span class="math inline">\(\frac{25.5}{2} = 12.75\)</span> units, so the distance from the join of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> to that point is <span class="math inline">\(12.75 - 8.5 = 4.25\)</span>, and the tree looks like that in <a href="#fig-upgma-2" class="quarto-xref">Figure&nbsp;<span>2.2</span></a>:</li>
+<ol start="5" type="1">
+<li>In the next round of UPGMA, we would join <span class="math inline">\((A, B)\)</span> with <span class="math inline">\(C\)</span> as a distance of 25.5 units, as this is the only connection left to make. But this distance is that between the two objects. If we assume that they are equally-related to their “common ancestor,” where they meet up, then the length of the branch from <span class="math inline">\(C\)</span> to the common ancestor is <span class="math inline">\(\frac{25.5}{2} = 12.75\)</span> units, so the distance from the join of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> to that point is <span class="math inline">\(12.75 - 8.5 = 4.25\)</span>, and the tree looks like that in <a href="#fig-upgma-2" class="quarto-xref">Figure&nbsp;<span>2.1 (b)</span></a>:</li>
 </ol>
-<div>
-
-</div>
-<div class="quarto-layout-panel" data-layout-ncol="2" width="40%">
+<div id="fig-upgma-intro" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-upgma-intro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-upgma-intro" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-upgma-1" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
+<figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-upgma-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/images/upgma_example_1.new.png" class="img-fluid figure-img">
+<img src="assets/images/upgma_example_1.new.png" class="img-fluid figure-img" data-ref-parent="fig-upgma-intro">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upgma-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.1: The first join in the tree: <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> meet with branch lengths 8.5
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-upgma-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) The first join in the tree: <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> meet with branch lengths 8.5
 </figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-upgma-intro" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-upgma-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
+<figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-upgma-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="assets/images/upgma_example.new.png" class="img-fluid figure-img">
+<img src="assets/images/upgma_example.new.png" class="img-fluid figure-img" data-ref-parent="fig-upgma-intro">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upgma-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.2: The second join in the tree: <span class="math inline">\((A, B)\)</span> and <span class="math inline">\(C\)</span> meet at a total branch depth of 12.75
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-upgma-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) The second join in the tree: <span class="math inline">\((A, B)\)</span> and <span class="math inline">\(C\)</span> meet at a total branch depth of 12.75
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<p>The two stages of drawing the example tree: (a) the first join between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>; (b) the addition of <span class="math inline">\(C\)</span>.</p>
 </div>
-</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upgma-intro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: The two stages of drawing the example tree: (a) the first join between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>; (b) the addition of <span class="math inline">\(C\)</span>.
+</figcaption>
+</figure>
 </div>
 <ol start="5" type="1">
 <li>The final tree can be represented as <span class="math inline">\(((A, B), C)\)</span>: <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> lie within the inner parentheses, reflecting that they are more similar to each other than either is to <span class="math inline">\(C\)</span>.</li>
@@ -480,14 +479,14 @@ It’s OK, we know that chocolate bars aren’t evolutionarily related.
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sweeties-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.3: Six varieties of chocolate for which we will make an evolutionary tree, on the basis of how similar they are to each other.
+Figure&nbsp;2.2: Six varieties of chocolate for which we will make an evolutionary tree, on the basis of how similar they are to each other.
 </figcaption>
 </figure>
 </div>
 <section id="making-a-distance-matrix" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="making-a-distance-matrix"><span class="header-section-number">2.1.1</span> Making a distance matrix</h3>
 <p>It’s not very obvious how to measure the distances between different kinds of chocolate (other than to get a ruler out and see how far apart they are). This is true in the same way that it’s not obvious how to measure a distance between a cat and a dog, or a human and a whale, or a bacterium and a fungus.</p>
-<p>One approach to defining distances, developed as part of an approach to reconstructing evolution called <em>cladistics</em>, is to define <em>characters</em> that the chocolate types either possess or do not possess. For example, a Mars Bar contains caramel, but a Bounty does not. A Dairy Milk bar is flat, but Smarties are not.</p>
+<p>One approach to defining distances, developed as part of an approach to reconstructing evolution called <a href="https://evolution.berkeley.edu/phylogenetic-systematics/reconstructing-trees-cladistics/"><em>cladistics</em></a>, is to define <em>characters</em> that the chocolate types either possess or do not possess. For example, a Mars Bar contains caramel, but a Bounty does not. A Dairy Milk bar is flat, but Smarties are not.</p>
 <p>By defining a set of <em>characters</em>, we can make a table of properties that might be shared, or not, between all our chocolate bars: <a href="#tbl-characters" class="quarto-xref">Table&nbsp;<span>2.1</span></a>.</p>
 <div class="cell">
 <div id="tbl-characters" class="cell quarto-float anchored">
@@ -756,7 +755,7 @@ Table&nbsp;2.3: Hamming distance matrix generated from the chocolate characters.
 <div id="tbl-dist-calc-1" class="quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dist-calc-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2.4: Calculating Hamming distance from (Smarties, Maltesers) to the other chocolates.
+Table&nbsp;2.4: Calculating distance from (Smarties, Maltesers) to the other chocolates.
 </figcaption>
 <div aria-describedby="tbl-dist-calc-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
@@ -792,6 +791,19 @@ Table&nbsp;2.4: Calculating Hamming distance from (Smarties, Maltesers) to the o
 </div>
 </figure>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Once we start taking averages, the distances are no longer Hamming distances, technically. But we’ll carry on using the <span class="math inline">\(H(object1, object2)\)</span> form, for convenience.</p>
+</div>
+</div>
 <ol start="3" type="1">
 <li>Next we take out the individual Smarties and Maltesers rows and columns from the distance matrix, and replace them with a new row and column that reflects the combined (Smarties, Maltesers) ancestor distances from <a href="#tbl-dist-calc-1" class="quarto-xref">Table&nbsp;<span>2.4</span></a>:</li>
 </ol>
@@ -799,7 +811,7 @@ Table&nbsp;2.4: Calculating Hamming distance from (Smarties, Maltesers) to the o
 <div id="tbl-hamming-dist-2" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hamming-dist-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2.5: Hamming distance matrix generated from the chocolate characters.
+Table&nbsp;2.5: Distance matrix generated from the chocolate characters.
 </figcaption>
 <div aria-describedby="tbl-hamming-dist-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -840,13 +852,13 @@ Table&nbsp;2.5: Hamming distance matrix generated from the chocolate characters.
 </div>
 </div>
 <ol start="4" type="1">
-<li><p>Now the most closely-related pair of chocolatesin <a href="#tbl-hamming-dist-2" class="quarto-xref">Table&nbsp;<span>2.5</span></a> is Mars and Crunchie, with Hamming distance <span class="math inline">\(H=3\)</span>, so they have a branch length to their common ancestor of <span class="math inline">\(\frac{3}{2} = 1.5\)</span>.</p></li>
+<li><p>Now the most closely-related pair of chocolates in <a href="#tbl-hamming-dist-2" class="quarto-xref">Table&nbsp;<span>2.5</span></a> is Mars and Crunchie, with distance <span class="math inline">\(H=3\)</span>, so they have a branch length to their common ancestor of <span class="math inline">\(\frac{3}{2} = 1.5\)</span>.</p></li>
 <li><p>We update the distance matrix again. We calculate the <em>arithmetic mean</em> of the distances from Mars and Crunchie to the other chocolates:</p></li>
 </ol>
 <div id="tbl-dist-calc-2" class="quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dist-calc-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2.6: Calculating Hamming distance from (Mars, Crunchie) to the remaining chocolates.
+Table&nbsp;2.6: Calculating distance from (Mars, Crunchie) to the remaining chocolates.
 </figcaption>
 <div aria-describedby="tbl-dist-calc-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
@@ -889,7 +901,7 @@ Table&nbsp;2.6: Calculating Hamming distance from (Mars, Crunchie) to the remain
 <div id="tbl-hamming-dist-3" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hamming-dist-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2.7: Hamming distance matrix generated from the chocolate characters.
+Table&nbsp;2.7: Distance matrix generated from the chocolate characters.
 </figcaption>
 <div aria-describedby="tbl-hamming-dist-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -930,13 +942,13 @@ Table&nbsp;2.7: Hamming distance matrix generated from the chocolate characters.
 </div>
 </div>
 <ol start="7" type="1">
-<li><p>Now the most similar pair of chocolates in <a href="#tbl-hamming-dist-3" class="quarto-xref">Table&nbsp;<span>2.7</span></a> is (Mars, Crunchie) and Tunnock’s, with a Hamming distance of 5 (so a branch length to their common ancestor of $ = 2.5). They come together to make the new group ((Mars, Crunchie), Tunnock’s)</p></li>
+<li><p>Now the most similar pair of chocolates in <a href="#tbl-hamming-dist-3" class="quarto-xref">Table&nbsp;<span>2.7</span></a> is (Mars, Crunchie) and Tunnock’s, with a distance of 5 (so a branch length to their common ancestor of $ = 2.5). They come together to make the new group ((Mars, Crunchie), Tunnock’s)</p></li>
 <li><p>Once more we update the distance matrix We calculate the <em>arithmetic mean</em> of the distances from (Mars, Crunchie) and Tunnock’s to (Smarties, Maltesers):</p></li>
 </ol>
 <div id="tbl-dist-calc-3" class="quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dist-calc-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2.8: Calculating Hamming distance from ((Mars, Crunchie), Tunnock’s) to (Smarties, Maltesers).
+Table&nbsp;2.8: Calculating distance from ((Mars, Crunchie), Tunnock’s) to (Smarties, Maltesers).
 </figcaption>
 <div aria-describedby="tbl-dist-calc-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
@@ -973,7 +985,7 @@ Table&nbsp;2.8: Calculating Hamming distance from ((Mars, Crunchie), Tunnock’s
 <div id="tbl-hamming-dist-4" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hamming-dist-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2.9: Hamming distance matrix generated from the chocolate characters.
+Table&nbsp;2.9: Distance matrix generated from the chocolate characters.
 </figcaption>
 <div aria-describedby="tbl-hamming-dist-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -1013,7 +1025,7 @@ Table&nbsp;2.9: Hamming distance matrix generated from the chocolate characters.
 <img src="assets/images/chocolate_tree.new.png" class="img-fluid figure-img" style="width:60.0%" alt="UPGMA tree calculated for the five chocolate varieties.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chocolate-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.4: UPGMA tree, including branch lengths, for the five chocolate varieties.
+Figure&nbsp;2.3: UPGMA tree, including branch lengths, for the five chocolate varieties.
 </figcaption>
 </figure>
 </div>
@@ -1027,11 +1039,11 @@ Interpreting the tree
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="#fig-chocolate-tree" class="quarto-xref">Figure&nbsp;<span>2.4</span></a> shows what we might have guessed from the distance matrix.</p>
+<p><a href="#fig-chocolate-tree" class="quarto-xref">Figure&nbsp;<span>2.3</span></a> shows what we might have guessed from the distance matrix.</p>
 <ul>
 <li>Smarties and Maltesers are more similar to each other than they are to the other chocolates. This makes sense as both are packets of small elements, not bars.</li>
-<li>The Mars and Crunchie bars, being bars, are more similar to each other than they are to any of the other chocolates, which are not bars.</li>
-<li>The Tunnock’s Tea Cake is unlike all the other chocolates (it is the deepest-branching chocolate), and probably groups with the Mars Bar and Crunchie because you only get one in a wrapper.</li>
+<li>The Mars and Crunchie bars, being bar-shaped and wrapped in chocolate, are more similar to each other than they are to any of the other chocolates, which are not bars.</li>
+<li>The Tunnock’s Tea Cake is unlike all the other chocolates (it is the deepest-branching chocolate), and probably groups with the Mars Bar and Crunchie because you only get one in a wrapper. If there were two in a packet, or it was a box of teacakes, the tree might have looked different.</li>
 </ul>
 </div>
 </div>
