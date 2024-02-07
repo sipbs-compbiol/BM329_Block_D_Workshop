@@ -20,7 +20,11 @@ The workshop material will remain live online for the duration of BM329, and you
 
 By the end of this workshop, students will be able to:
 
-- 
+- Describe influenza virus particles and how they replicate
+- Explain the roles that antigenic shift and antigenic drift play in influenza virus evolution
+- Discuss the effects of vaccination and antiviral drugs on influenza virus evolution and public health
+- Build phylogenetic trees representing the evolution of influenza viruses
+
 
 ## Assessment
 
