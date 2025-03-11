@@ -20,7 +20,7 @@ book:
   repo-actions: [edit, issue]
 
   author: "Leighton Pritchard"
-  date: "1/26/2024"
+  date: "3/11/2025"
 
   chapters:
     - index.qmd
