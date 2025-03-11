@@ -3,7 +3,7 @@ project:
   output-dir: _book
 
 book:
-  title: "BM329 Workshop B: Diseases of the Respiratory Tract - Supporting Information"
+  title: "BM329 Workshop D: Diseases of the Respiratory Tract - Supporting Information"
   reader-mode: true
   
   cover-image: sipbs_compbio_800.png
@@ -20,7 +20,7 @@ book:
   repo-actions: [edit, issue]
 
   author: "Leighton Pritchard"
-  date: "1/26/2024"
+  date: "3/11/2025"
 
   chapters:
     - index.qmd
