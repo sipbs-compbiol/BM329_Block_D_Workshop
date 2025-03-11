@@ -1,4 +1,4 @@
-ay: "2023-24"
+ay: "2024-25"
 
 admin:
   name: "Leighton Pritchard"
@@ -6,5 +6,5 @@ admin:
   homepage: "https://www.strath.ac.uk/staff/pritchardleightondr/"
 
 github:
-  repo: "https://github.com/sipbs-compbiol/BM329_Block_B_workshop"
-  issues: "https://github.com/sipbs-compbiol/BM329_Block_B_workshop/issues"
+  repo: "https://github.com/sipbs-compbiol/BM329_Block_D_workshop"
+  issues: "https://github.com/sipbs-compbiol/BM329_Block_D_workshop/issues"
