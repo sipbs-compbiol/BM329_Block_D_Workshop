@@ -1,8 +1,8 @@
-# Preface to the {{< var ay >}} BM329 Block B workshop {.unnumbered}
+# Preface to the {{< var ay >}} BM329 Block {{< var block >}} workshop {.unnumbered}
 
-Welcome to the BM329 (Biomedical Microbiology) Block B workshop for {{< var ay >}}.
+Welcome to the BM329 (Biomedical Microbiology) Block {{< var block >}} workshop for {{< var ay >}}.
 
-This year is the first presentation of this workshop material, and we would be very grateful to hear feedback [by email](mailto:{{< var admin.email >}}) or through the [GitHub repository Issues page]({{< var github.issues >}}).
+We would be very grateful to hear feedback [by email](mailto:{{< var admin.email >}}) or through the [GitHub repository Issues page]({{< var github.issues >}}).
 
 ## Overview
 
