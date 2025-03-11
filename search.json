@@ -2,41 +2,41 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "BM329 Workshop B: Diseases of the Respiratory Tract - Supporting Information",
+    "title": "BM329 Workshop D: Diseases of the Respiratory Tract - Supporting Information",
     "section": "",
-    "text": "Preface to the 2023-24 BM329 Block B workshop\nWelcome to the BM329 (Biomedical Microbiology) Block B workshop for 2023-24.\nThis year is the first presentation of this workshop material, and we would be very grateful to hear feedback by email or through the GitHub repository Issues page.",
+    "text": "Preface to the 2024-25 BM329 Block D workshop\nWelcome to the BM329 (Biomedical Microbiology) Block D workshop for 2024-25.\nWe would be very grateful to hear feedback by email or through the GitHub repository Issues page.",
     "crumbs": [
-      "Preface to the {{< var ay >}} BM329 Block B workshop"
+      "Preface to the {{< var ay >}} BM329 Block {{< var block >}} workshop"
     ]
   },
   {
     "objectID": "index.html#overview",
     "href": "index.html#overview",
-    "title": "BM329 Workshop B: Diseases of the Respiratory Tract - Supporting Information",
+    "title": "BM329 Workshop D: Diseases of the Respiratory Tract - Supporting Information",
     "section": "Overview",
     "text": "Overview\nThe workshop asks you to\n\n\n\n\n\n\nImportant Note\n\n\n\nThere is new material in this workshop that is not covered in lectures, and this material is examinable. Please take care to read the text in the expandable callout boxes, as well as that for the workshop, to be sure you have understood the topic and obtain full value from the exercise.\nThe workshop material will remain live online for the duration of BM329, and you can revisit it whenever you wish, for practice or revision.\n\n\nYou should be able to complete this workshop in under two hours.",
     "crumbs": [
-      "Preface to the {{< var ay >}} BM329 Block B workshop"
+      "Preface to the {{< var ay >}} BM329 Block {{< var block >}} workshop"
     ]
   },
   {
     "objectID": "index.html#learning-objectives",
     "href": "index.html#learning-objectives",
-    "title": "BM329 Workshop B: Diseases of the Respiratory Tract - Supporting Information",
+    "title": "BM329 Workshop D: Diseases of the Respiratory Tract - Supporting Information",
     "section": "Learning Objectives",
     "text": "Learning Objectives\nBy the end of this workshop, students will be able to:\n\nDescribe influenza virus particles and how they replicate\nExplain the roles that antigenic shift and antigenic drift play in influenza virus evolution\nDiscuss the effects of vaccination and antiviral drugs on influenza virus evolution and public health\nBuild phylogenetic trees representing the evolution of influenza viruses\n\nAfter reading the materials presented in this online component students will be able to understand:\n\nHow phylogenetic trees represent evolution as a series of divergences that branch out from a single common ancestor.\nHow phylograms and cladograms differ.\nHow the same tree can look different, depending how branches are rotated, but because the topology remains the same, it represents the same evolutionary history.\nHow to produce a Hamming distance matrix from a table of characters.\nHow to use the UPGMA algorithm to produce a dendrogram from a distance matrix.",
     "crumbs": [
-      "Preface to the {{< var ay >}} BM329 Block B workshop"
+      "Preface to the {{< var ay >}} BM329 Block {{< var block >}} workshop"
     ]
   },
   {
     "objectID": "index.html#assessment",
     "href": "index.html#assessment",
-    "title": "BM329 Workshop B: Diseases of the Respiratory Tract - Supporting Information",
+    "title": "BM329 Workshop D: Diseases of the Respiratory Tract - Supporting Information",
     "section": "Assessment",
     "text": "Assessment\nThis workshop activity itself is not formally assessed although, as noted, the material it contains is examinable.",
     "crumbs": [
-      "Preface to the {{< var ay >}} BM329 Block B workshop"
+      "Preface to the {{< var ay >}} BM329 Block {{< var block >}} workshop"
     ]
   },
   {
@@ -44,7 +44,7 @@
     "href": "intro.html",
     "title": "1  Introduction",
     "section": "",
-    "text": "1.1 Dendrograms (Tree Diagrams) and Evolution\nIn this workshop, you will produce dendrograms: these are tree diagrams that can represent the process of evolution. You have already seen tree diagrams, like those in Figure 1.1, used on this course to represent the process of evolution.\nTypically, in evolutionary analyses, you will see that these trees are organised to show a progression through time. The leaves of the tree usually represent things that exist “now” or, at least, most recently (these are at the right hand side of Figure 1.1).\nThe dendrogram traces lines - branches - from the leaves, and these gradually meet up together, just as branches of a real tree do, as you progress from right to left in Figure 1.1. Eventually, they all meet up together at the oldest (left-most, in Figure 1.1) part of the tree, (called the root).\nTrees like this can be used to represent large-scale evolution, like the complete Tree of Life in Figure 1.1, or evolution on a small scale. For example, Figure 1.2 represents evolution of the pathogenic bacterium Pseudomonas aeruginosa in a UK hospital. This tree was used to trace the source of infection in a burns unit, ultimately locating the precise valve in the plumbing from which the infectious agent was finding its way into patients (Quick et al. (2014)).",
+    "text": "1.1 Dendrograms (Tree Diagrams) and Evolution\nThis workshop introduces and reinforces concepts related to transmission and evolution of respiratory viruses.\nIn this workshop, you will produce dendrograms: these are tree diagrams that can represent the process of evolution. You have already seen tree diagrams, like those in Figure 1.1, used on this course to represent the process of evolution.\nTypically, in evolutionary analyses, you will see that these trees are organised to show a progression through time. The leaves of the tree usually represent things that exist “now” or, at least, most recently (these are at the right hand side of Figure 1.1).\nThe dendrogram traces lines - branches - from the leaves, and these gradually meet up together, just as branches of a real tree do, as you progress from right to left in Figure 1.1. Eventually, they all meet up together at the oldest (left-most, in Figure 1.1) part of the tree, (called the root).\nTrees like this can be used to represent large-scale evolution, like the complete Tree of Life in Figure 1.1, or evolution on a small scale. For example, Figure 1.2 represents evolution of the pathogenic bacterium Pseudomonas aeruginosa in a UK hospital. This tree was used to trace the source of infection in a burns unit, ultimately locating the precise valve in the plumbing from which the infectious agent was finding its way into patients (Quick et al. (2014)).",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
@@ -84,7 +84,7 @@
     "href": "upgma.html",
     "title": "2  UPGMA",
     "section": "",
-    "text": "2.1 Let’s build a tree!",
+    "text": "2.1 Let’s build a tree!\nUPGMA stands for Unweighted Pair Group Method with Arithmetic mean. It is a simple hierarchical clustering method that can be used to produce a rooted dendrogram. This dendrogram represents the structure (clustering) of relationships in a dataset.\nWhen the dataset represents evolutionary distances, UPGMA can be used to produce an evolutionary tree.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>UPGMA</span>"
     ]
